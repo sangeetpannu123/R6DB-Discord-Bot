@@ -9,7 +9,7 @@ namespace R6DB_Bot
         public static async Task<HttpResponseMessage> Get(string requestUri, string xAppId)
             => await Get(requestUri, xAppId);
 
-        public static async Task<HttpResponseMessage> Get(string requestUri, string xAppId, List<KeyValuePair<string, string>> query, List<KeyValuePair<string, string>> headers)
+        public static async Task<HttpResponseMessage> Get(string requestUri, string xAppId, List<KeyValuePair<string, string>> query, List<KeyValuePair<string, string>> headers = null)
         {
             var builder = new HttpRequestBuilder()
                                 .AddMethod(HttpMethod.Get)
