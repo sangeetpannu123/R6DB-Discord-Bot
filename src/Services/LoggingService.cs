@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Example
+namespace R6DB_Bot
 {
     public class LoggingService
     {

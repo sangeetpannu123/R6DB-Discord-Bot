@@ -254,3 +254,4 @@ paket-files/
 
 # project file
 _configuration.json
+*.json

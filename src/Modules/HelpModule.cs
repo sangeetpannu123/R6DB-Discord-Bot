@@ -4,12 +4,13 @@ using Microsoft.Extensions.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Example.Modules
+namespace R6DB_Bot.Modules
 {
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
         private readonly CommandService _service;
         private readonly IConfigurationRoot _config;
+        private static string Prefix = "!";
 
         public HelpModule(CommandService service, IConfigurationRoot config)
         {
@@ -20,7 +21,7 @@ namespace Example.Modules
         [Command("help")]
         public async Task HelpAsync()
         {
-            string prefix = _config["prefix"];
+            Prefix = _config["prefix"];
             var builder = new EmbedBuilder()
             {
                 Color = new Color(114, 137, 218),
@@ -34,7 +35,7 @@ namespace Example.Modules
                 {
                     var result = await cmd.CheckPreconditionsAsync(Context);
                     if (result.IsSuccess)
-                        description += $"{prefix}{cmd.Aliases.First()}\n";
+                        description += $"{Prefix}{cmd.Aliases.First()}\n";
                 }
                 
                 if (!string.IsNullOrWhiteSpace(description))
@@ -48,12 +49,18 @@ namespace Example.Modules
                 }
             }
 
+            builder.Footer = new EmbedFooterBuilder()
+            {
+                Text = "Developed By Dakpan Support Server: https://discord.gg/UeBwppF"
+            };
+
             await ReplyAsync("", false, builder.Build());
         }
 
         [Command("help")]
         public async Task HelpAsync(string command)
         {
+            Prefix = _config["prefix"];
             var result = _service.Search(Context, command);
 
             if (!result.IsSuccess)
@@ -81,6 +88,11 @@ namespace Example.Modules
                     x.IsInline = false;
                 });
             }
+
+            builder.Footer = new EmbedFooterBuilder()
+            {
+                Text = "Developed By Dakpan Support Server: https://discord.gg/UeBwppF"
+            };
 
             await ReplyAsync("", false, builder.Build());
         }
