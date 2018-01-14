@@ -1,35 +1,48 @@
 ﻿using Discord;
 using Discord.Commands;
-using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
-using System.Threading.Tasks;
+using System;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace R6DB_Bot.Modules
 {
-    [Name("Example")]
-    public class ExampleModule : ModuleBase<SocketCommandContext>
+    public class RankModule : ModuleBase<SocketCommandContext>
     {
+        public string baseUrl = "";
+        public string xAppId = "";
         private readonly CommandService _service;
         private readonly IConfigurationRoot _config;
-        private static string Prefix = "!";
 
-        public ExampleModule(CommandService service, IConfigurationRoot config)
+        public RankModule(CommandService service, IConfigurationRoot config)
         {
             _service = service;
             _config = config;
+
+            baseUrl = _config["r6db_url"];
+            xAppId = _config["x-app-id"];
         }
 
-        [Command("e"), Alias("e"), Name("Example")]
+        [Command("rank"), Alias("r"), Name("Rank")]
         [Summary("Get you rank")]
-        [RequireUserPermission(GuildPermission.Administrator)]
-        public void Example([Remainder]string text)
+        public void Rank([Remainder]string text)
         {
-
             ReplyAsync($"you said **{text}**");
+            
+            var requestUri = $"{baseUrl}/Players";
+
+            var queryParams = new List<KeyValuePair<string, string>>();
+            queryParams.Add(new KeyValuePair<string, string>("name", "dakpan.kps"));
+            queryParams.Add(new KeyValuePair<string, string>("platform", "pc"));
+
+            var response = HttpRequestFactory.Get(requestUri, xAppId);
+            Console.WriteLine($"Status: {response.Status}");
+            //Console.WriteLine(response.ContentAsString());
+            var outputModel = response.Result.ContentAsType<List<Player>>();
+            outputModel.ForEach(item => Console.WriteLine("{0}", JsonConvert.SerializeObject(item)));
         }
 
         //[Group("rank"), Alias("r"), Name("Rank")]
-        //[RequireContext(ContextType.Guild)]
         //public class Set : ModuleBase
         //{
         //    [Command("nick"), Priority(1)]
