@@ -192,7 +192,7 @@ namespace R6DB_Bot.Modules
             {
                 TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.casual?.timePlayed);
 
-                builder.AddInlineField(region + " All Time","**Total Played: ** " + model?.stats?.casual?.played + Environment.NewLine +
+                builder.AddInlineField(region + " All Time","**Total Matches Played: ** " + model?.stats?.casual?.played + Environment.NewLine +
                                                             "**Total W/L (Ratio):** " + model?.stats?.casual?.won + " / " + model?.stats?.casual?.lost + " **(" + GetRatio(model?.stats?.casual?.won, model?.stats?.casual?.lost) + ")**" + Environment.NewLine +
                                                             "**Total K/D (Ratio):** " + model?.stats?.casual?.kills + " / " + model?.stats?.casual?.deaths + " **(" + GetRatio(model?.stats?.casual?.kills, model?.stats?.casual?.deaths) + ")**");
             }
@@ -236,8 +236,9 @@ namespace R6DB_Bot.Modules
                 span.Duration().Days > 0 ? string.Format("{0:0} day{1} ", span.Days, span.Days == 1 ? String.Empty : "s") : string.Empty,
                 span.Duration().Hours > 0 ? string.Format("{0:0} hour{1} " + Environment.NewLine, span.Hours, span.Hours == 1 ? String.Empty : "s") : string.Empty,
                 span.Duration().Minutes > 0 ? string.Format("{0:0} minute{1} ", span.Minutes, span.Minutes == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Seconds > 0 ? string.Format("{0:0} second{1} ", span.Seconds, span.Seconds == 1 ? String.Empty : "s") : string.Empty);
-            
+                span.Duration().Seconds > 0 ? string.Format("{0:0} second{1} ", span.Seconds, span.Seconds == 1 ? String.Empty : "s") : string.Empty,
+                span.Duration().TotalHours > 0 ? string.Format("{0:0} total hour{1} ", span.TotalHours, span.TotalHours == 1 ? String.Empty : "s") : string.Empty);
+
             if (string.IsNullOrEmpty(formatted))
             {
                 formatted = "0 seconds";
@@ -252,7 +253,7 @@ namespace R6DB_Bot.Modules
             {
                 return "0";
             }
-            return ((decimal)min / (decimal)max).ToString("N2");
+            return ((decimal)min / (decimal)max).ToString("#.##");
         }
     }
 }

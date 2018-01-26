@@ -54,15 +54,20 @@ namespace R6DB_Bot.Services
             //Find the best match, if there isn't anyone with this exact name, than return the first one we found (likely to be the best)
             var model = new PlayerModel();
             model = outputModel.Where(m => m.name.ToLower() == text.ToLower()).FirstOrDefault();
+
             if (model == null)
             {
                 //await ReplyAsync($"We found **{outputModel.Count}** likely results for the name **{text}** if the folowing stats are not the once you are looking for, please be more specific with the name/region/platform.");
                 model = outputModel.FirstOrDefault();
-                model.guessed = new GuessedModel
+
+                if (outputModel.Count > 1)
                 {
-                    IsGuessed = true,
-                    PlayersFound = outputModel.Count
-                };
+                    model.guessed = new GuessedModel
+                    {
+                        IsGuessed = true,
+                        PlayersFound = outputModel.Count
+                    };
+                }
             }
 
             var playerURL = $"{baseUrl}/Players/{model.id}";

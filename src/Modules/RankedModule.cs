@@ -196,8 +196,8 @@ namespace R6DB_Bot.Modules
             if (regionInfo != null)
             {
                 builder.AddInlineField(region + " Current Season",  "**Rank:** " + ToReadableRank(regionInfo.rank) + Environment.NewLine +
-                                                                    "**MMR:** " + regionInfo.mmr + Environment.NewLine +
-                                                                    "**Highest MMR:** " + regionInfo.max_mmr + Environment.NewLine +
+                                                                    "**MMR:** " + regionInfo.mmr.ToString("#.##") + Environment.NewLine +
+                                                                    "**Highest MMR:** " + regionInfo.max_mmr.ToString("#.##") + Environment.NewLine +
                                                                     "**Next Rank:** " + CeilingRankMMR(regionInfo.rank) + Environment.NewLine +
                                                                     "**W/L/A:** " + regionInfo.wins + "/" + regionInfo.losses + "/" + regionInfo.abandons + Environment.NewLine +
                                                                     "**W/L Ratio:** **" + GetRatio(regionInfo.wins, regionInfo.losses) + "**");
@@ -212,7 +212,7 @@ namespace R6DB_Bot.Modules
             {
                 TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.ranked?.timePlayed);
 
-                builder.AddInlineField(region + " All Time","**Total Played: ** " + model?.stats?.ranked?.played + Environment.NewLine +
+                builder.AddInlineField(region + " All Time","**Total Matches Played: ** " + model?.stats?.ranked?.played + Environment.NewLine +
                                                             "**Total W/L (Ratio):** " + model?.stats?.ranked?.won + " / " + model?.stats?.ranked?.lost + " **(" + GetRatio(model?.stats?.ranked?.won, model?.stats?.ranked?.lost) + ")**" + Environment.NewLine +
                                                             "**Total K/D (Ratio):** " + model?.stats?.ranked?.kills + " / " + model?.stats?.ranked?.deaths + " **(" + GetRatio(model?.stats?.ranked?.kills, model?.stats?.ranked?.deaths) + ")**");
             }
@@ -256,7 +256,8 @@ namespace R6DB_Bot.Modules
                 span.Duration().Days > 0 ? string.Format("{0:0} day{1} ", span.Days, span.Days == 1 ? String.Empty : "s") : string.Empty,
                 span.Duration().Hours > 0 ? string.Format("{0:0} hour{1} " + Environment.NewLine, span.Hours, span.Hours == 1 ? String.Empty : "s") : string.Empty,
                 span.Duration().Minutes > 0 ? string.Format("{0:0} minute{1} ", span.Minutes, span.Minutes == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Seconds > 0 ? string.Format("{0:0} second{1} ", span.Seconds, span.Seconds == 1 ? String.Empty : "s") : string.Empty);
+                span.Duration().Seconds > 0 ? string.Format("{0:0} second{1} ", span.Seconds, span.Seconds == 1 ? String.Empty : "s") : string.Empty,
+                span.Duration().TotalHours > 0 ? string.Format("{0:0} total hour{1} ", span.TotalHours, span.TotalHours == 1 ? String.Empty : "s") : string.Empty);
             
             if (string.IsNullOrEmpty(formatted))
             {
@@ -271,7 +272,7 @@ namespace R6DB_Bot.Modules
             rank_nr = rank_nr ?? 0;
             var rankEnum = (RankEnum)rank_nr;
             var info = rankEnum.GetAttribute<RankInformation>();
-            return info.ELO;
+            return info.MMR;
         }
 
         private string ToReadableRank(int? rank_nr)
@@ -296,7 +297,7 @@ namespace R6DB_Bot.Modules
             {
                 return "0";
             }
-            return ((decimal)min / (decimal)max).ToString("N2");
+            return ((decimal)min / (decimal)max).ToString("#.##");
         }
     }
 }
