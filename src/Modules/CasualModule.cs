@@ -163,7 +163,7 @@ namespace R6DB_Bot.Modules
                 await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
             }
 
-            var regionInfo = new RegionInfo();
+            var regionInfo = new RegionInfoModel();
             switch(regionEnum)
             {
                 case RegionEnum.EMEA:
@@ -179,7 +179,7 @@ namespace R6DB_Bot.Modules
             await SendCasualInformationMessage(model, regionInfo);
         }
 
-        private async Task SendCasualInformationMessage(PlayerModel model, RegionInfo regionInfo)
+        private async Task SendCasualInformationMessage(PlayerModel model, RegionInfoModel regionInfo)
         {
             var builder = new EmbedBuilder();
 
