@@ -111,5 +111,12 @@ namespace R6DB_Bot.Modules
         {
             await ReplyAsync($"You can support me by buying some beers for me using the following link: https://www.paypal.me/Dakpan or by helping me develop the bot!");
         }
+
+        [Command("contribute"), Name("contribute")]
+        [Summary("How to contribute to the project")]
+        public async Task ContributeAsync()
+        {
+            await ReplyAsync($"You can contribute to the project by helping me develop or give me feedback: https://github.com/jeanpoelie/R6DB-Discord-Bot/tree/development!");
+        }
     }
 }
