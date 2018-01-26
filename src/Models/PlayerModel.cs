@@ -9,13 +9,13 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("casual")]
-        public int casual { get; set; }
+        public int? casual { get; set; }
 
         [JsonProperty("ranked")]
-        public int ranked { get; set; }
+        public int? ranked { get; set; }
 
         [JsonProperty("last_played")]
-        public DateTime last_played { get; set; }
+        public DateTime? last_played { get; set; }
     }
 
     public class Apac
@@ -258,114 +258,114 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("assists")]
-        public int assists { get; set; }
+        public int? assists { get; set; }
 
         [JsonProperty("blindKills")]
-        public int blindKills { get; set; }
+        public int? blindKills { get; set; }
 
         [JsonProperty("bulletsFired")]
-        public int bulletsFired { get; set; }
+        public int? bulletsFired { get; set; }
 
         [JsonProperty("bulletsHit")]
-        public int bulletsHit { get; set; }
+        public int? bulletsHit { get; set; }
 
         [JsonProperty("dbno")]
-        public int dbno { get; set; }
+        public int? dbno { get; set; }
 
         [JsonProperty("dbnoAssists")]
-        public int dbnoAssists { get; set; }
+        public int? dbnoAssists { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("gadgetsDestroyed")]
-        public int gadgetsDestroyed { get; set; }
+        public int? gadgetsDestroyed { get; set; }
 
         [JsonProperty("headshot")]
-        public int headshot { get; set; }
+        public int? headshot { get; set; }
 
         [JsonProperty("hostageDefense")]
-        public int hostageDefense { get; set; }
+        public int? hostageDefense { get; set; }
 
         [JsonProperty("hostageRescue")]
-        public int hostageRescue { get; set; }
+        public int? hostageRescue { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("meleeKills")]
-        public int meleeKills { get; set; }
+        public int? meleeKills { get; set; }
 
         [JsonProperty("penetrationKills")]
-        public int penetrationKills { get; set; }
+        public int? penetrationKills { get; set; }
 
         [JsonProperty("played")]
-        public int played { get; set; }
+        public int? played { get; set; }
 
         [JsonProperty("rappelBreaches")]
-        public int rappelBreaches { get; set; }
+        public int? rappelBreaches { get; set; }
 
         [JsonProperty("revives")]
-        public int revives { get; set; }
+        public int? revives { get; set; }
 
         [JsonProperty("revivesDenied")]
-        public int revivesDenied { get; set; }
+        public int? revivesDenied { get; set; }
 
         [JsonProperty("serverAggression")]
-        public int serverAggression { get; set; }
+        public int? serverAggression { get; set; }
 
         [JsonProperty("serverDefender")]
-        public int serverDefender { get; set; }
+        public int? serverDefender { get; set; }
 
         [JsonProperty("serversHacked")]
-        public int serversHacked { get; set; }
+        public int? serversHacked { get; set; }
 
         [JsonProperty("suicides")]
-        public int suicides { get; set; }
+        public int? suicides { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
     }
 
     public class Hostage
     {
 
         [JsonProperty("bestScore")]
-        public int bestScore { get; set; }
+        public int? bestScore { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("played")]
-        public int played { get; set; }
+        public int? played { get; set; }
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
     }
 
     public class Iq
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -375,19 +375,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -397,19 +397,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -419,19 +419,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -441,19 +441,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -463,19 +463,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -485,19 +485,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -507,19 +507,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -529,19 +529,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -551,19 +551,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -573,19 +573,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -595,19 +595,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -617,19 +617,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -639,19 +639,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -661,19 +661,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -683,19 +683,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -705,19 +705,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -727,19 +727,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -749,19 +749,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -771,19 +771,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -793,19 +793,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -815,19 +815,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -837,19 +837,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -859,19 +859,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -881,19 +881,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -903,19 +903,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -925,19 +925,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -947,19 +947,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -969,19 +969,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -991,19 +991,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1013,19 +1013,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1035,19 +1035,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1057,19 +1057,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1079,19 +1079,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1101,19 +1101,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1123,19 +1123,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1145,19 +1145,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1167,19 +1167,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1189,19 +1189,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1211,19 +1211,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1233,19 +1233,19 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("name")]
         public string name { get; set; }
@@ -1382,38 +1382,38 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("played")]
-        public int played { get; set; }
+        public int? played { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
     }
 
     public class Secure
     {
 
         [JsonProperty("bestScore")]
-        public int bestScore { get; set; }
+        public int? bestScore { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("played")]
-        public int played { get; set; }
+        public int? played { get; set; }
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
     }
 
     public class Stats
@@ -1509,7 +1509,7 @@ namespace R6DB_Bot.Models
         public string id { get; set; }
 
         [JsonProperty("userId")]
-        public object userId { get; set; }
+        public string userId { get; set; }
 
         [JsonProperty("platform")]
         public string platform { get; set; }
@@ -1519,6 +1519,9 @@ namespace R6DB_Bot.Models
 
         [JsonProperty("level")]
         public int level { get; set; }
+
+        [JsonProperty("active")]
+        public bool? active { get; set; }
 
         [JsonProperty("created_at")]
         public DateTime created_at { get; set; }
@@ -1555,5 +1558,8 @@ namespace R6DB_Bot.Models
 
         [JsonProperty("updateAvailableAt")]
         public DateTime updateAvailableAt { get; set; }
+
+        [JsonIgnore]
+        public GuessedModel guessed { get; set; }
     }
 }

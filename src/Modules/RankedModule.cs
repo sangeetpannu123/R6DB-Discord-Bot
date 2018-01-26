@@ -10,11 +10,12 @@ using R6DB_Bot.Models;
 using R6DB_Bot.Extensions;
 using R6DB_Bot.Enums;
 using System.Text.RegularExpressions;
+using R6DB_Bot.Services;
 
 namespace R6DB_Bot.Modules
 {
-    [Name("Rank Information")]
-    public class RankModule : ModuleBase<SocketCommandContext>
+    [Name("Ranked Information")]
+    public class RankedModule : ModuleBase<SocketCommandContext>
     {
         public string baseUrl = "";
         public string xAppId = "";
@@ -26,7 +27,7 @@ namespace R6DB_Bot.Modules
         private RegionEnum regionEnum;
         private PlatformEnum platformEnum;
 
-        public RankModule(CommandService service, IConfigurationRoot config)
+        public RankedModule(CommandService service, IConfigurationRoot config)
         {
             _service = service;
             _config = config;
@@ -38,7 +39,7 @@ namespace R6DB_Bot.Modules
             platformEnum = PlatformEnum.PC;
         }
 
-        [Command("rank eu"), Alias("r eu"), Name("Rank Europe")]
+        [Command("ranked eu"), Alias("rank eu", "r eu"), Name("Rank Europe")]
         [Priority(1)]
         [Summary("Get rank statistics")]
         public async Task GetEURanks([Remainder]string text)
@@ -47,7 +48,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank eu pc"), Alias("r eu pc"), Name("Rank PC Europe")]
+        [Command("ranked eu pc"), Alias("rank eu pc", "r eu pc"), Name("Rank PC Europe")]
         [Priority(2)]
         [Summary("Get EU PC rank statistics")]
         public async Task GetEUPCRanks([Remainder]string text)
@@ -57,7 +58,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank eu xbox"), Alias("r eu xbox"), Name("Rank XBOX Europe")]
+        [Command("ranked eu xbox"), Alias("rank eu xbox", "r eu xbox"), Name("Rank XBOX Europe")]
         [Priority(2)]
         [Summary("Get EU XBOX rank statistics")]
         public async Task GetEUXBOXRanks([Remainder]string text)
@@ -67,7 +68,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank eu ps4"), Alias("r eu ps4"), Name("Rank PS4 Europe")]
+        [Command("ranked eu ps4"), Alias("rank eu ps4", "r eu ps4"), Name("Rank PS4 Europe")]
         [Priority(2)]
         [Summary("Get EU PS4 rank statistics")]
         public async Task GetEUPS4Ranks([Remainder]string text)
@@ -77,7 +78,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank na"), Alias("r na"), Name("Rank America")]
+        [Command("ranked na"), Alias("rank na", "r na"), Name("Rank America")]
         [Priority(1)]
         [Summary("Get NA rank statistics")]
         public async Task GetNARanks([Remainder]string text)
@@ -86,7 +87,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank na pc"), Alias("r na pc"), Name("Rank PC America")]
+        [Command("ranked na pc"), Alias("rank na pc", "r na pc"), Name("Rank PC America")]
         [Priority(2)]
         [Summary("Get NA PC rank statistics")]
         public async Task GetNAPCRanks([Remainder]string text)
@@ -96,7 +97,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank na xbox"), Alias("r na xbox"), Name("Rank XBOX America")]
+        [Command("ranked na xbox"), Alias("rank na xbox", "r na xbox"), Name("Rank XBOX America")]
         [Priority(2)]
         [Summary("Get NA XBOX rank statistics")]
         public async Task GetNAXBOXRanks([Remainder]string text)
@@ -106,7 +107,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank na ps4"), Alias("r na ps4"), Name("Rank PS4 America")]
+        [Command("ranked na ps4"), Alias("rank na ps4", "r na ps4"), Name("Rank PS4 America")]
         [Priority(2)]
         [Summary("Get NA PS4 rank statistics")]
         public async Task GetNAPS4Ranks([Remainder]string text)
@@ -116,7 +117,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank asia"), Alias("r asia"), Name("Rank asia")]
+        [Command("ranked asia"), Alias("rank asia", "r asia"), Name("Rank asia")]
         [Priority(1)]
         [Summary("Get ASIA rank statistics")]
         public async Task GetASIARanks([Remainder]string text)
@@ -125,7 +126,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank asia pc"), Alias("r asia pc"), Name("Rank PC ASIA")]
+        [Command("ranked asia pc"), Alias("rank asia pc", "r asia pc"), Name("Rank PC ASIA")]
         [Priority(2)]
         [Summary("Get ASIA PC rank statistics")]
         public async Task GetASIAPCRanks([Remainder]string text)
@@ -135,7 +136,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank asia xbox"), Alias("r asia xbox"), Name("Rank XBOX ASIA")]
+        [Command("ranked asia xbox"), Alias("rank asia xbox", "r asia xbox"), Name("Rank XBOX ASIA")]
         [Priority(2)]
         [Summary("Get ASIA XBOX rank statistics")]
         public async Task GetASIAXBOXRanks([Remainder]string text)
@@ -145,7 +146,7 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank asia ps4"), Alias("r asia ps4"), Name("Rank PS4 ASIA")]
+        [Command("ranked asia ps4"), Alias("rank asia ps4", "r asia ps4"), Name("Rank PS4 ASIA")]
         [Priority(2)]
         [Summary("Get ASIA PS4 rank statistics")]
         public async Task GetASIAPS4Ranks([Remainder]string text)
@@ -155,58 +156,31 @@ namespace R6DB_Bot.Modules
             await GetRanks(text);
         }
 
-        [Command("rank"), Alias("r"), Name("Rank Default Region")]
+        [Command("ranked"), Alias("rank", "r"), Name("Rank Default Region")]
         [Priority(0)]
         [Summary("Get Default Region Rank Statistics")]
         public async Task GetRanks([Remainder]string text)
         {
-            var requestUri = $"{baseUrl}/Players";
-
-            var region = regionEnum.GetAttribute<RegionInformation>().Description;
-            var platform = platformEnum.GetAttribute<PlatformInformation>().Description;
-            var technicalPlatform = platformEnum.GetAttribute<PlatformInformation>().TechnicalName;
-
-            var queryParams = new List<KeyValuePair<string, string>>();
-            queryParams.Add(new KeyValuePair<string, string>("name", text));
-            queryParams.Add(new KeyValuePair<string, string>("platform", technicalPlatform));
-            queryParams.Add(new KeyValuePair<string, string>("exact", "1")); //to make sure the name is exactly this. TODO: change this later into less exact with intelligence for questions like "did you mean.... "
-
-            var response = await HttpRequestFactory.Get(requestUri, xAppId, queryParams);
-            var outputModel = response.ContentAsType<IList<PlayerModel>>();
-            if (outputModel.Count == 0)
+            var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
+            if (model?.guessed != null && model.guessed.IsGuessed)
             {
-                await ReplyAsync($"No player found in **{region}** on **{platform}** with the name **{text}**.");
-                return;
+                await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
             }
 
-            foreach (var model in outputModel)
+            var regionInfo = new RegionInfo();
+            switch (regionEnum)
             {
-                var playerURL = $"{baseUrl}/Players/{model.id}";
-
-                var queryParams2 = new List<KeyValuePair<string, string>>();
-                var response2 = await HttpRequestFactory.Get(playerURL, xAppId, queryParams2);
-                var responseString = await response2.Content.ReadAsStringAsync();
-                var jsonSerializerSettings = new JsonSerializerSettings
-                {
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                var fullModel = JsonConvert.DeserializeObject<PlayerModel>(responseString, jsonSerializerSettings);
-
-                var regionInfo = new RegionInfo();
-                switch(regionEnum)
-                {
-                    case RegionEnum.EMEA:
-                        regionInfo.SetEURegionInfo(fullModel);
-                        break;
-                    case RegionEnum.APAC:
-                        regionInfo.SetASIARegionInfo(fullModel);
-                        break;
-                    case RegionEnum.NCSA:
-                        regionInfo.SetNARegionInfo(fullModel);
-                        break;
-                }
-                await SendRankedInformationMessage(fullModel, regionInfo);
+                case RegionEnum.EMEA:
+                    regionInfo.SetEURegionInfo(model);
+                    break;
+                case RegionEnum.APAC:
+                    regionInfo.SetASIARegionInfo(model);
+                    break;
+                case RegionEnum.NCSA:
+                    regionInfo.SetNARegionInfo(model);
+                    break;
             }
+            await SendRankedInformationMessage(model, regionInfo);
         }
 
         private async Task SendRankedInformationMessage(PlayerModel model, RegionInfo regionInfo)
@@ -248,7 +222,7 @@ namespace R6DB_Bot.Modules
                 TimeSpan rankSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.ranked);
                     
                 builder.AddInlineField("**Play Time**", ToReadableString(rankSeconds));
-                builder.AddInlineField("**Last Played**", model?.lastPlayed.last_played.ToString("dd MMMM yyyy hh:mm:ss"));
+                builder.AddInlineField("**Last Played**", model?.lastPlayed.last_played?.ToString("dd MMMM yyyy hh:mm:ss"));
             }
 
             builder.ImageUrl = "https://ubistatic-a.akamaihd.net/0058/prod/assets/images/season5-rank20.f31680a7.svg";

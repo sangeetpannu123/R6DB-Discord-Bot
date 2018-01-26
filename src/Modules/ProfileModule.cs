@@ -10,6 +10,7 @@ using R6DB_Bot.Models;
 using R6DB_Bot.Extensions;
 using R6DB_Bot.Enums;
 using System.Text.RegularExpressions;
+using R6DB_Bot.Services;
 
 namespace R6DB_Bot.Modules
 {
@@ -69,39 +70,13 @@ namespace R6DB_Bot.Modules
         [Summary("Get profile information about the player")]
         public async Task GetPlayerProfile([Remainder]string text)
         {
-            var requestUri = $"{baseUrl}/Players";
-
-            var region = regionEnum.GetAttribute<RegionInformation>().Description;
-            var platform = platformEnum.GetAttribute<PlatformInformation>().Description;
-            var technicalPlatform = platformEnum.GetAttribute<PlatformInformation>().TechnicalName;
-
-            var queryParams = new List<KeyValuePair<string, string>>();
-            queryParams.Add(new KeyValuePair<string, string>("name", text));
-            queryParams.Add(new KeyValuePair<string, string>("platform", technicalPlatform));
-            queryParams.Add(new KeyValuePair<string, string>("exact", "1")); //to make sure the name is exactly this. TODO: change this later into less exact with intelligence for questions like "did you mean.... "
-
-            var response = await HttpRequestFactory.Get(requestUri, xAppId, queryParams);
-            var outputModel = response.ContentAsType<IList<PlayerModel>>();
-            if (outputModel.Count == 0)
+            var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
+            if (model?.guessed != null && model.guessed.IsGuessed)
             {
-                await ReplyAsync($"No player found on **{platform}** with the name **{text}**.");
-                return;
+                await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
             }
 
-            foreach (var model in outputModel)
-            {
-                var playerURL = $"{baseUrl}/Players/{model.id}";
-
-                var queryParams2 = new List<KeyValuePair<string, string>>();
-                var response2 = await HttpRequestFactory.Get(playerURL, xAppId, queryParams2);
-                var responseString = await response2.Content.ReadAsStringAsync();
-                var jsonSerializerSettings = new JsonSerializerSettings
-                {
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                var fullModel = JsonConvert.DeserializeObject<PlayerModel>(responseString, jsonSerializerSettings);
-                await SendPlayerInformationMessage(fullModel);
-            }
+            await SendPlayerInformationMessage(model);
         }
 
         private async Task SendPlayerInformationMessage(PlayerModel model)
@@ -128,7 +103,7 @@ namespace R6DB_Bot.Modules
             builder.AddField("Technical Information", "**ID:** " + model?.id + Environment.NewLine +
                                                       "**UserID:** " + model?.userId ?? "Unkown" + Environment.NewLine +
                                                       "**Profile Added:** " + model?.created_at.ToString("dd MMMM yyyy hh:mm:ss") + Environment.NewLine +
-                                                      "**Last Played:** " + model?.lastPlayed.last_played.ToString("dd MMMM yyyy hh:mm:ss") + Environment.NewLine);           
+                                                      "**Last Played:** " + model?.lastPlayed.last_played?.ToString("dd MMMM yyyy hh:mm:ss") + Environment.NewLine);           
 
             if(model?.aliases != null)
             {

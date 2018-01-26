@@ -1,15 +1,12 @@
 ﻿using Discord;
 using Discord.Commands;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using R6DB_Bot.Models;
 using R6DB_Bot.Extensions;
 using R6DB_Bot.Enums;
-using System.Text.RegularExpressions;
+using R6DB_Bot.Services;
 
 namespace R6DB_Bot.Modules
 {
@@ -160,53 +157,26 @@ namespace R6DB_Bot.Modules
         [Summary("Get Default Region Casual Statistics")]
         public async Task GetCasual([Remainder]string text)
         {
-            var requestUri = $"{baseUrl}/Players";
-
-            var region = regionEnum.GetAttribute<RegionInformation>().Description;
-            var platform = platformEnum.GetAttribute<PlatformInformation>().Description;
-            var technicalPlatform = platformEnum.GetAttribute<PlatformInformation>().TechnicalName;
-
-            var queryParams = new List<KeyValuePair<string, string>>();
-            queryParams.Add(new KeyValuePair<string, string>("name", text));
-            queryParams.Add(new KeyValuePair<string, string>("platform", technicalPlatform));
-            queryParams.Add(new KeyValuePair<string, string>("exact", "1")); //to make sure the name is exactly this. TODO: change this later into less exact with intelligence for questions like "did you mean.... "
-
-            var response = await HttpRequestFactory.Get(requestUri, xAppId, queryParams);
-            var outputModel = response.ContentAsType<IList<PlayerModel>>();
-            if (outputModel.Count == 0)
+            var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
+            if(model?.guessed != null && model.guessed.IsGuessed)
             {
-                await ReplyAsync($"No player found in **{region}** on **{platform}** with the name **{text}**.");
-                return;
+                await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
             }
 
-            foreach (var model in outputModel)
+            var regionInfo = new RegionInfo();
+            switch(regionEnum)
             {
-                var playerURL = $"{baseUrl}/Players/{model.id}";
-
-                var queryParams2 = new List<KeyValuePair<string, string>>();
-                var response2 = await HttpRequestFactory.Get(playerURL, xAppId, queryParams2);
-                var responseString = await response2.Content.ReadAsStringAsync();
-                var jsonSerializerSettings = new JsonSerializerSettings
-                {
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                var fullModel = JsonConvert.DeserializeObject<PlayerModel>(responseString, jsonSerializerSettings);
-
-                var regionInfo = new RegionInfo();
-                switch(regionEnum)
-                {
-                    case RegionEnum.EMEA:
-                        regionInfo.SetEURegionInfo(fullModel);
-                        break;
-                    case RegionEnum.APAC:
-                        regionInfo.SetASIARegionInfo(fullModel);
-                        break;
-                    case RegionEnum.NCSA:
-                        regionInfo.SetNARegionInfo(fullModel);
-                        break;
-                }
-                await SendCasualInformationMessage(fullModel, regionInfo);
+                case RegionEnum.EMEA:
+                    regionInfo.SetEURegionInfo(model);
+                    break;
+                case RegionEnum.APAC:
+                    regionInfo.SetASIARegionInfo(model);
+                    break;
+                case RegionEnum.NCSA:
+                    regionInfo.SetNARegionInfo(model);
+                    break;
             }
+            await SendCasualInformationMessage(model, regionInfo);
         }
 
         private async Task SendCasualInformationMessage(PlayerModel model, RegionInfo regionInfo)
@@ -232,7 +202,7 @@ namespace R6DB_Bot.Modules
                 TimeSpan casualSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.casual);
                     
                 builder.AddInlineField("**Play Time**", ToReadableString(casualSeconds));
-                builder.AddInlineField("**Last Played**", model?.lastPlayed.last_played.ToString("dd MMMM yyyy hh:mm:ss"));
+                builder.AddInlineField("**Last Played**", model?.lastPlayed.last_played?.ToString("dd MMMM yyyy hh:mm:ss"));
             }
 
             builder.ImageUrl = "https://ubistatic-a.akamaihd.net/0058/prod/assets/images/season5-casual20.f31680a7.svg";
