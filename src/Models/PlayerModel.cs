@@ -27,22 +27,22 @@ namespace R6DB_Bot.Models
         public int losses { get; set; }
 
         [JsonProperty("max_mmr")]
-        public int max_mmr { get; set; }
+        public decimal max_mmr { get; set; }
 
         [JsonProperty("max_rank")]
         public int max_rank { get; set; }
 
         [JsonProperty("mmr")]
-        public int mmr { get; set; }
+        public decimal mmr { get; set; }
 
         [JsonProperty("rank")]
         public int rank { get; set; }
 
         [JsonProperty("skill_mean")]
-        public int skill_mean { get; set; }
+        public decimal skill_mean { get; set; }
 
         [JsonProperty("skill_stdev")]
-        public double skill_stdev { get; set; }
+        public decimal skill_stdev { get; set; }
 
         [JsonProperty("wins")]
         public int wins { get; set; }
@@ -57,22 +57,22 @@ namespace R6DB_Bot.Models
         public int losses { get; set; }
 
         [JsonProperty("max_mmr")]
-        public int max_mmr { get; set; }
+        public decimal max_mmr { get; set; }
 
         [JsonProperty("max_rank")]
         public int max_rank { get; set; }
 
         [JsonProperty("mmr")]
-        public int mmr { get; set; }
+        public decimal mmr { get; set; }
 
         [JsonProperty("rank")]
         public int rank { get; set; }
 
         [JsonProperty("skill_mean")]
-        public int skill_mean { get; set; }
+        public decimal skill_mean { get; set; }
 
         [JsonProperty("skill_stdev")]
-        public double skill_stdev { get; set; }
+        public decimal skill_stdev { get; set; }
 
         [JsonProperty("wins")]
         public int wins { get; set; }
@@ -87,22 +87,22 @@ namespace R6DB_Bot.Models
         public int losses { get; set; }
 
         [JsonProperty("max_mmr")]
-        public int max_mmr { get; set; }
+        public decimal max_mmr { get; set; }
 
         [JsonProperty("max_rank")]
         public int max_rank { get; set; }
 
         [JsonProperty("mmr")]
-        public int mmr { get; set; }
+        public decimal mmr { get; set; }
 
         [JsonProperty("rank")]
         public int rank { get; set; }
 
         [JsonProperty("skill_mean")]
-        public int skill_mean { get; set; }
+        public decimal skill_mean { get; set; }
 
         [JsonProperty("skill_stdev")]
-        public double skill_stdev { get; set; }
+        public decimal skill_stdev { get; set; }
 
         [JsonProperty("wins")]
         public int wins { get; set; }
@@ -118,22 +118,22 @@ namespace R6DB_Bot.Models
         public int losses { get; set; }
 
         [JsonProperty("max_mmr")]
-        public int max_mmr { get; set; }
+        public decimal max_mmr { get; set; }
 
         [JsonProperty("max_rank")]
         public int max_rank { get; set; }
 
         [JsonProperty("mmr")]
-        public int mmr { get; set; }
+        public decimal mmr { get; set; }
 
         [JsonProperty("rank")]
         public int rank { get; set; }
 
         [JsonProperty("skill_mean")]
-        public int skill_mean { get; set; }
+        public decimal skill_mean { get; set; }
 
         [JsonProperty("skill_stdev")]
-        public double skill_stdev { get; set; }
+        public decimal skill_stdev { get; set; }
 
         [JsonProperty("wins")]
         public int wins { get; set; }
@@ -1448,7 +1448,16 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("global")]
-        public object global { get; set; }
+        public int? global { get; set; }
+
+        [JsonProperty("emea")]
+        public int? emea { get; set; }
+
+        [JsonProperty("ncsa")]
+        public int? ncsa { get; set; }
+
+        [JsonProperty("apac")]
+        public int? apac { get; set; }
     }
 
     public class Ranks

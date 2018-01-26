@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>R6DB_Bot</RootNamespace>
     <AssemblyName>R6DB_Bot</AssemblyName>
   </PropertyGroup>

@@ -186,8 +186,11 @@ namespace R6DB_Bot.Modules
                 var queryParams2 = new List<KeyValuePair<string, string>>();
                 var response2 = await HttpRequestFactory.Get(playerURL, xAppId, queryParams2);
                 var responseString = await response2.Content.ReadAsStringAsync();
-                JObject obj = JObject.Parse(responseString);
-                var fullModel = obj.ToObject<PlayerModel>();
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
+                var fullModel = JsonConvert.DeserializeObject<PlayerModel>(responseString, jsonSerializerSettings);
 
                 var regionInfo = new RegionInfo();
                 switch(regionEnum)
@@ -213,12 +216,6 @@ namespace R6DB_Bot.Modules
             var region = regionEnum.GetAttribute<RegionInformation>().Description;            
             var platform = platformEnum.GetAttribute<PlatformInformation>().Description;
 
-            if (model == null)
-            {
-                await ReplyAsync("No player found with the name **{text}**.");
-                return;
-            }
-
             builder.AddField("General Information", "**Level:** " + model?.level);
 
             if(model?.stats?.casual != null)
@@ -226,8 +223,8 @@ namespace R6DB_Bot.Modules
                 TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.casual?.timePlayed);
 
                 builder.AddInlineField(region + " All Time","**Total Played: ** " + model?.stats?.casual?.played + Environment.NewLine +
-                                                            "**Total W/L (Ratio):** " + model?.stats?.casual?.won + " / " + model?.stats?.casual?.lost + " (" + GetRatio(model?.stats?.casual?.won, model?.stats?.casual?.lost) + ")" + Environment.NewLine +
-                                                            "**Total K/D (Ratio):** " + model?.stats?.casual?.kills + " / " + model?.stats?.casual?.deaths + " (" + GetRatio(model?.stats?.casual?.kills, model?.stats?.casual?.deaths) + ")");
+                                                            "**Total W/L (Ratio):** " + model?.stats?.casual?.won + " / " + model?.stats?.casual?.lost + " **(" + GetRatio(model?.stats?.casual?.won, model?.stats?.casual?.lost) + ")**" + Environment.NewLine +
+                                                            "**Total K/D (Ratio):** " + model?.stats?.casual?.kills + " / " + model?.stats?.casual?.deaths + " **(" + GetRatio(model?.stats?.casual?.kills, model?.stats?.casual?.deaths) + ")**");
             }
 
             if (model?.lastPlayed != null)

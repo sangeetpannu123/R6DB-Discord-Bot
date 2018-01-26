@@ -186,8 +186,11 @@ namespace R6DB_Bot.Modules
                 var queryParams2 = new List<KeyValuePair<string, string>>();
                 var response2 = await HttpRequestFactory.Get(playerURL, xAppId, queryParams2);
                 var responseString = await response2.Content.ReadAsStringAsync();
-                JObject obj = JObject.Parse(responseString);
-                var fullModel = obj.ToObject<PlayerModel>();
+                var jsonSerializerSettings = new JsonSerializerSettings
+                {
+                    MissingMemberHandling = MissingMemberHandling.Ignore
+                };
+                var fullModel = JsonConvert.DeserializeObject<PlayerModel>(responseString, jsonSerializerSettings);
 
                 var regionInfo = new RegionInfo();
                 switch(regionEnum)
@@ -214,12 +217,6 @@ namespace R6DB_Bot.Modules
             var region = regionEnum.GetAttribute<RegionInformation>().Description;            
             var platform = platformEnum.GetAttribute<PlatformInformation>().Description;
 
-            if (model == null)
-            {
-                await ReplyAsync("No player found with the name **{text}**.");
-                return;
-            }
-
             builder.AddField("General Information", "**Level:** " + model?.level);
             
             if (regionInfo != null)
@@ -229,7 +226,7 @@ namespace R6DB_Bot.Modules
                                                                     "**Highest MMR:** " + regionInfo.max_mmr + Environment.NewLine +
                                                                     "**Next Rank:** " + CeilingRankMMR(regionInfo.rank) + Environment.NewLine +
                                                                     "**W/L/A:** " + regionInfo.wins + "/" + regionInfo.losses + "/" + regionInfo.abandons + Environment.NewLine +
-                                                                    "**W/L Ratio:** " + GetRatio(regionInfo.wins, regionInfo.losses));
+                                                                    "**W/L Ratio:** **" + GetRatio(regionInfo.wins, regionInfo.losses) + "**");
 
                 if (rankNr < regionInfo.rank)
                 {
@@ -242,8 +239,8 @@ namespace R6DB_Bot.Modules
                 TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.ranked?.timePlayed);
 
                 builder.AddInlineField(region + " All Time","**Total Played: ** " + model?.stats?.ranked?.played + Environment.NewLine +
-                                                            "**Total W/L (Ratio):** " + model?.stats?.ranked?.won + " / " + model?.stats?.ranked?.lost + " (" + GetRatio(model?.stats?.ranked?.won, model?.stats?.ranked?.lost) + ")" + Environment.NewLine +
-                                                            "**Total K/D (Ratio):** " + model?.stats?.ranked?.kills + " / " + model?.stats?.ranked?.deaths + " (" + GetRatio(model?.stats?.ranked?.kills, model?.stats?.ranked?.deaths) + ")");
+                                                            "**Total W/L (Ratio):** " + model?.stats?.ranked?.won + " / " + model?.stats?.ranked?.lost + " **(" + GetRatio(model?.stats?.ranked?.won, model?.stats?.ranked?.lost) + ")**" + Environment.NewLine +
+                                                            "**Total K/D (Ratio):** " + model?.stats?.ranked?.kills + " / " + model?.stats?.ranked?.deaths + " **(" + GetRatio(model?.stats?.ranked?.kills, model?.stats?.ranked?.deaths) + ")**");
             }
 
             if (model?.lastPlayed != null)
