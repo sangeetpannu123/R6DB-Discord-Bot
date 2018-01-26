@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace R6DB_Bot
+namespace R6DB_Bot.Models
 {
     public class LastPlayed
     {
@@ -20,7 +20,6 @@ namespace R6DB_Bot
 
     public class Apac
     {
-
         [JsonProperty("abandons")]
         public int abandons { get; set; }
 
@@ -58,19 +57,19 @@ namespace R6DB_Bot
         public int losses { get; set; }
 
         [JsonProperty("max_mmr")]
-        public double max_mmr { get; set; }
+        public int max_mmr { get; set; }
 
         [JsonProperty("max_rank")]
         public int max_rank { get; set; }
 
         [JsonProperty("mmr")]
-        public double mmr { get; set; }
+        public int mmr { get; set; }
 
         [JsonProperty("rank")]
         public int rank { get; set; }
 
         [JsonProperty("skill_mean")]
-        public double skill_mean { get; set; }
+        public int skill_mean { get; set; }
 
         [JsonProperty("skill_stdev")]
         public double skill_stdev { get; set; }
@@ -80,6 +79,36 @@ namespace R6DB_Bot
     }
 
     public class Ncsa
+    {
+        [JsonProperty("abandons")]
+        public int abandons { get; set; }
+
+        [JsonProperty("losses")]
+        public int losses { get; set; }
+
+        [JsonProperty("max_mmr")]
+        public int max_mmr { get; set; }
+
+        [JsonProperty("max_rank")]
+        public int max_rank { get; set; }
+
+        [JsonProperty("mmr")]
+        public int mmr { get; set; }
+
+        [JsonProperty("rank")]
+        public int rank { get; set; }
+
+        [JsonProperty("skill_mean")]
+        public int skill_mean { get; set; }
+
+        [JsonProperty("skill_stdev")]
+        public double skill_stdev { get; set; }
+
+        [JsonProperty("wins")]
+        public int wins { get; set; }
+    }
+
+    public class RegionInfo
     {
 
         [JsonProperty("abandons")]
@@ -108,6 +137,45 @@ namespace R6DB_Bot
 
         [JsonProperty("wins")]
         public int wins { get; set; }
+
+        public void SetEURegionInfo(PlayerModel fullModel)
+        {
+            abandons    = fullModel?.rank?.emea?.abandons ?? 0;
+            losses      = fullModel?.rank?.emea?.losses ?? 0;
+            max_mmr     = fullModel?.rank?.emea?.max_mmr ?? 0;
+            max_rank    = fullModel?.rank?.emea?.max_rank ?? 0;
+            mmr         = fullModel?.rank?.emea?.mmr ?? 0;
+            rank        = fullModel?.rank?.emea?.rank ?? 0;
+            skill_stdev = fullModel?.rank?.emea?.skill_stdev ?? 0;
+            skill_mean  = fullModel?.rank?.emea?.skill_mean ?? 0;
+            wins        = fullModel?.rank?.emea?.wins ?? 0;
+        }
+
+        public void SetNARegionInfo(PlayerModel fullModel)
+        {
+            abandons    = fullModel?.rank?.ncsa?.abandons ?? 0;
+            losses      = fullModel?.rank?.ncsa?.losses ?? 0;
+            max_mmr     = fullModel?.rank?.ncsa?.max_mmr ?? 0;
+            max_rank    = fullModel?.rank?.ncsa?.max_rank ?? 0;
+            mmr         = fullModel?.rank?.ncsa?.mmr ?? 0;
+            rank        = fullModel?.rank?.ncsa?.rank ?? 0;
+            skill_stdev = fullModel?.rank?.ncsa?.skill_stdev ?? 0;
+            skill_mean  = fullModel?.rank?.ncsa?.skill_mean ?? 0;
+            wins        = fullModel?.rank?.ncsa?.wins ?? 0;
+        }
+
+        public void SetASIARegionInfo(PlayerModel fullModel)
+        {
+            abandons    = fullModel?.rank?.apac?.abandons ?? 0;
+            losses      = fullModel?.rank?.apac?.losses ?? 0;
+            max_mmr     = fullModel?.rank?.apac?.max_mmr ?? 0;
+            max_rank    = fullModel?.rank?.apac?.max_rank ?? 0;
+            mmr         = fullModel?.rank?.apac?.mmr ?? 0;
+            rank        = fullModel?.rank?.apac?.rank ?? 0;
+            skill_stdev = fullModel?.rank?.apac?.skill_stdev ?? 0;
+            skill_mean  = fullModel?.rank?.apac?.skill_mean ?? 0;
+            wins        = fullModel?.rank?.apac?.wins ?? 0;
+        }
     }
 
     public class Rank
@@ -1457,7 +1525,7 @@ namespace R6DB_Bot
 
         [JsonProperty("rank")]
         public Rank rank { get; set; }
-
+        
         [JsonProperty("seasonRanks")]
         public IList<SeasonRank> seasonRanks { get; set; }
 

@@ -7,7 +7,7 @@ namespace R6DB_Bot
     {
         public static T ContentAsType<T>(this HttpResponseMessage response)
         {
-            var data = response.Content.ReadAsStringAsync().Result;
+            var data = response.Content.ReadAsStringAsync().Result;            
             return string.IsNullOrEmpty(data) ? 
                             default(T) : 
                             JsonConvert.DeserializeObject<T>(data);

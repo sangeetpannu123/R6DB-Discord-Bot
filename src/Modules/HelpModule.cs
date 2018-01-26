@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace R6DB_Bot.Modules
 {
+    [Name("Help")]
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
         private readonly CommandService _service;
@@ -17,7 +18,7 @@ namespace R6DB_Bot.Modules
             _service = service;
             _config = config;
         }
-
+        
         [Command("help")]
         public async Task HelpAsync()
         {
@@ -95,6 +96,20 @@ namespace R6DB_Bot.Modules
             };
 
             await ReplyAsync("", false, builder.Build());
+        }
+
+        [Command("invite"), Alias("i"), Name("invite")]
+        [Summary("Get invite link")]
+        public async Task InviteAsync()
+        {
+            await ReplyAsync($"Click on the link to invite me https://discordapp.com/oauth2/authorize?client_id="+_config["client-id"]+"&scope=bot&permissions=19456");
+        }
+
+        [Command("support"), Alias("s"), Name("support")]
+        [Summary("How to support me")]
+        public async Task SupportAsync()
+        {
+            await ReplyAsync($"You can support me by buying some beers for me using the following link: https://www.paypal.me/Dakpan or by helping me develop the bot!");
         }
     }
 }

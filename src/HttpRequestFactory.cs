@@ -7,7 +7,14 @@ namespace R6DB_Bot
     public static class HttpRequestFactory
     {
         public static async Task<HttpResponseMessage> Get(string requestUri, string xAppId)
-            => await Get(requestUri, xAppId);
+        {
+            var builder = new HttpRequestBuilder()
+                                .AddMethod(HttpMethod.Get)
+                                .AddRequestUri(requestUri)
+                                .AddXAppId(xAppId);
+
+            return await builder.SendAsync();
+        }
 
         public static async Task<HttpResponseMessage> Get(string requestUri, string xAppId, List<KeyValuePair<string, string>> query, List<KeyValuePair<string, string>> headers = null)
         {
