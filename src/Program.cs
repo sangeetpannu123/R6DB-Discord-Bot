@@ -55,10 +55,15 @@ namespace R6DB_Bot
             _discordClient = provider.GetService<DiscordSocketClient>();
             _discordClient.MessageReceived += OnMessageReceivedAsync;
             await _discordClient.SetGameAsync("use r6db help for info.");
-            await _discordClient.SetStatusAsync(UserStatus.AFK);
+            await _discordClient.SetStatusAsync(UserStatus.Online);
             //_discordClient.JoinedGuild += _client_JoinedGuild;
 
             await Task.Delay(-1);     // Prevent the application from closing
+        }
+
+        public int CountGuilds()
+        {
+            return _discordClient.Guilds.Count;
         }
 
         public async Task OnMessageReceivedAsync(SocketMessage parameterMessage)

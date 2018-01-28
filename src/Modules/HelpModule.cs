@@ -102,7 +102,7 @@ namespace R6DB_Bot.Modules
         [Summary("Get invite link")]
         public async Task InviteAsync()
         {
-            await ReplyAsync($"Click on the link to invite me https://discordapp.com/oauth2/authorize?client_id="+_config["client-id"]+"&scope=bot&permissions=19456");
+            await ReplyAsync($"Click on the link to invite me https://discordapp.com/oauth2/authorize?client_id={_config["client-id"]}scope=bot&permissions=19456");
         }
 
         [Command("support"), Alias("s"), Name("support")]
@@ -117,6 +117,13 @@ namespace R6DB_Bot.Modules
         public async Task ContributeAsync()
         {
             await ReplyAsync($"You can contribute to the project by helping me develop or give me feedback: https://github.com/jeanpoelie/R6DB-Discord-Bot/tree/development!");
+        }
+
+        [Command("guild"), Alias("g"), Name("guild")]
+        [Summary("Get the number of active Guilds")]
+        public async Task GuildAsync()
+        {
+            await ReplyAsync($"The bot is current active in {Context.Client.Guilds.Count} servers.");
         }
     }
 }
