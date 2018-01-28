@@ -1,7 +1,10 @@
 # R6DB-Discord-Bot
 An Unofficial R6DB Discord Bot, developed in DotNetCore 2.0 as a Console Application.
 
-# Installation
+# Customer Installation
+[Click Here](https://discordapp.com/oauth2/authorize?client_id=405862980132143106&scope=bot&permissions=19456)
+
+# Developer Installation
 - Pull or clone the project into your Visual Studio 2017
 - Add a file called "_configuration.json" in the root of the project
 - Add the following content and fill it in with your own credentials.
