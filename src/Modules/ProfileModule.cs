@@ -131,7 +131,7 @@ namespace R6DB_Bot.Modules
                 Text = "Created by Dakpan#6955"
             };
 
-            builder.ThumbnailUrl = GetRankImage(rankNr);
+            builder.ThumbnailUrl = "https://uplay-avatars.s3.amazonaws.com/" + model?.id + "/default_146_146.png";
             builder.Timestamp = DateTime.UtcNow;
             builder.Url = "http://r6db.com/player/" + model.id;
 

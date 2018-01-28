@@ -74,22 +74,5 @@ namespace R6DB_Bot
                   message.HasStringPrefix(Prefix, ref argPos))) return;
             
         }
-
-        private static async Task _client_JoinedGuild(SocketGuild guild)
-        {
-            var embed = new EmbedBuilder();
-            embed.AddField("R6DB Bot ",
-                $"Beep boop, R6DB Bot here! Type `{Prefix}help` to see a list of my commands.");
-            embed.WithColor(Color.Blue);
-            embed.AddField("Developed By Dakpan", "Support Server: https://discord.gg/UeBwppF");
-            try
-            {
-                await guild.DefaultChannel.SendMessageAsync("", false, embed.Build());
-            }
-            catch
-            {
-                //
-            }
-        }
     }
 }
