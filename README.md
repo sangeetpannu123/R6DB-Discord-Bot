@@ -14,6 +14,7 @@ An Unofficial R6DB Discord Bot, developed in DotNetCore 2.0 as a Console Applica
   "client-id": "[Your client-id]",
   "x-app-id": "[Your R6DB App-id]",
   "r6db_url": "https://r6db.com/api/v2",
+  "db-org-token": "[Your Discordbot.org token]",
   "tokens": {
     "discord": "[Your discord secret]"
   }
@@ -23,6 +24,7 @@ Key | Value | Explaination
 --- | --- | ---
 client-id | 756fhg74h0-hg87-h84d-059a8dhe48be | [Discord Explained](https://discordapp.com/developers/docs/topics/oauth2)
 x-app-id | Anything you want | Request R6DB devs on discord
+db-org-token | token | The token you got from discordbot.org 
 discord | 98d7gf89df7g89gfg79fdgfd987fdg7 | [Discord Explained](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token)
 
 - Have fun building!
