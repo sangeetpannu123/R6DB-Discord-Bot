@@ -221,7 +221,7 @@ namespace R6DB_Bot.Modules
                 Text = "Created by Dakpan#6955"
             };
 
-            builder.ThumbnailUrl = "https://cdn.thingiverse.com/renders/7b/83/18/94/0c/f3106dba9117e872f7f57f851a95bba5_preview_card.jpg";
+            builder.ThumbnailUrl = "https://uplay-avatars.s3.amazonaws.com/" + model?.id + "/default_146_146.png";
             builder.Timestamp = DateTime.UtcNow;
             builder.Url = "http://r6db.com/player/" + model?.id;
 
