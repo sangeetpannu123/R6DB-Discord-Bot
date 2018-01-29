@@ -440,21 +440,21 @@ namespace R6DB_Bot.Modules
             var operatorURL = operatorEnum.GetAttribute<OperatorInformation>().URL;
             
             builder.AddInlineField("Win Loss", "**Win:** " + operatorModel.won + "  **Loss:** " + operatorModel.lost + Environment.NewLine +
-                                                "**Ratio: " + GetRatio(operatorModel.won, operatorModel.lost) + "**");
+                                                "**Ratio: " + StringVisualiser.GetRatio(operatorModel.won, operatorModel.lost) + "**");
 
             builder.AddInlineField("Kill Death", "**Kill:** " + operatorModel.kills + "  **Death:** " + operatorModel.deaths + Environment.NewLine +
-                                                "**Ratio: " + GetRatio(operatorModel.kills, operatorModel.deaths) + "**");
+                                                "**Ratio: " + StringVisualiser.GetRatio(operatorModel.kills, operatorModel.deaths) + "**");
             
             TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)operatorModel.timePlayed);
-            builder.AddField("Time Played", ToReadableString(operatorTimePlayed));
+            builder.AddField("Time Played", StringVisualiser.ToReadableString(operatorTimePlayed));
 
-            builder.Description = $"**{operatorModel.name}** Operator information for player **{model.name}** in **{region}** on **{platform}**";
+            builder.Description = $"**{operatorModel.name}** Operator information for player **{model?.name}** in **{region}** on **{platform}**";
 
             builder.Author = new EmbedAuthorBuilder
             {
                 IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
                 Name = platform + " " + region + " Player Operator",
-                Url = "http://r6db.com/player/" + model.id
+                Url = "http://r6db.com/player/" + model?.id
             };
 
             builder.Footer = new EmbedFooterBuilder
@@ -465,61 +465,11 @@ namespace R6DB_Bot.Modules
 
             builder.ThumbnailUrl = operatorURL;
             builder.Timestamp = DateTime.UtcNow;
-            builder.Url = "http://r6db.com/player/" + model.id;
+            builder.Url = "http://r6db.com/player/" + model?.id;
 
             builder.WithColor(Color.Orange);
 
             await ReplyAsync(string.Empty, false, builder);
-        }
-
-        private string ToReadableString(TimeSpan span)
-        {
-            string formatted = string.Format("{0}{1}{2}{3}",
-                span.Duration().Days > 0 ? string.Format("{0:0} day{1} ", span.Days, span.Days == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Hours > 0 ? string.Format("{0:0} hour{1} " + Environment.NewLine, span.Hours, span.Hours == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Minutes > 0 ? string.Format("{0:0} minute{1} ", span.Minutes, span.Minutes == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Seconds > 0 ? string.Format("{0:0} second{1} ", span.Seconds, span.Seconds == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().TotalHours > 0 ? string.Format("{0:0} total hour{1} ", span.TotalHours, span.TotalHours == 1 ? String.Empty : "s") : string.Empty);
-
-            if (string.IsNullOrEmpty(formatted))
-            {
-                formatted = "0 seconds";
-            }
-
-            return formatted;
-        }
-
-        private int CeilingRankMMR(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.MMR;
-        }
-
-        private string ToReadableRank(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.Description;
-        }
-
-        private string GetRankImage(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.URL;
-        }
-
-        private string GetRatio(int? min, int? max)
-        {
-            if(min == 0  || min == null || max == 0 || max == null)
-            {
-                return "0";
-            }
-            return ((decimal)min / (decimal)max).ToString("#.##");
         }
     }
 }

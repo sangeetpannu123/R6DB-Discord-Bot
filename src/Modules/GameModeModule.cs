@@ -198,7 +198,7 @@ namespace R6DB_Bot.Modules
                     builder.AddField("**Bomb**",  $"**Win:** {model?.stats?.bomb?.won}" + Environment.NewLine +
                                                   $"**Lost:** {model?.stats?.bomb?.lost}" + Environment.NewLine +
                                                   $"**Played:** {model?.stats?.bomb?.played}" + Environment.NewLine +
-                                                  $"**Ratio:** {GetRatio(model?.stats?.bomb?.won, model?.stats?.bomb?.lost)}" + Environment.NewLine +
+                                                  $"**Ratio:** {StringVisualiser.GetRatio(model?.stats?.bomb?.won, model?.stats?.bomb?.lost)}" + Environment.NewLine +
                                                   $"**Best Score:** {model?.stats?.bomb?.bestScore}" + Environment.NewLine);
                 }
 
@@ -207,7 +207,7 @@ namespace R6DB_Bot.Modules
                     builder.AddField("**Secure**",  $"**Win:** {model?.stats?.secure?.won}" + Environment.NewLine +
                                                     $"**Lost:** {model?.stats?.secure?.lost}" + Environment.NewLine +
                                                     $"**Played:** {model?.stats?.secure?.played}" + Environment.NewLine +
-                                                    $"**Ratio:** {GetRatio(model?.stats?.secure?.won, model?.stats?.secure?.lost)}" + Environment.NewLine +
+                                                    $"**Ratio:** {StringVisualiser.GetRatio(model?.stats?.secure?.won, model?.stats?.secure?.lost)}" + Environment.NewLine +
                                                     $"**Best Score:** {model?.stats?.secure?.bestScore}" + Environment.NewLine);
                 }
 
@@ -216,18 +216,18 @@ namespace R6DB_Bot.Modules
                     builder.AddField("**Hostage**",     $"**Win:** {model?.stats?.hostage?.won}" + Environment.NewLine +
                                                         $"**Lost:** {model?.stats?.hostage?.lost}" + Environment.NewLine +
                                                         $"**Played:** {model?.stats?.hostage?.played}" + Environment.NewLine +
-                                                        $"**Ratio:** {GetRatio(model?.stats?.hostage?.won, model?.stats?.hostage?.lost)}" + Environment.NewLine +
+                                                        $"**Ratio:** {StringVisualiser.GetRatio(model?.stats?.hostage?.won, model?.stats?.hostage?.lost)}" + Environment.NewLine +
                                                         $"**Best Score:** {model?.stats?.hostage?.bestScore}" + Environment.NewLine);
                 }
             }
             
-            builder.Description = region + " Game Mode information on " + platform + " for **" + model.name + "**";
+            builder.Description = region + " Game Mode information on " + platform + " for **" + model?.name + "**";
 
             builder.Author = new EmbedAuthorBuilder
             {
                 IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
                 Name = platform + " " + region + " Game Mode Information",
-                Url = "http://r6db.com/player/" + model.id
+                Url = "http://r6db.com/player/" + model?.id
             };
 
             builder.Footer = new EmbedFooterBuilder
@@ -238,28 +238,11 @@ namespace R6DB_Bot.Modules
 
             builder.ThumbnailUrl = "https://uplay-avatars.s3.amazonaws.com/" + model?.id + "/default_146_146.png";
             builder.Timestamp = DateTime.UtcNow;
-            builder.Url = "http://r6db.com/player/" + model.id;
+            builder.Url = "http://r6db.com/player/" + model?.id;
 
             builder.WithColor(Color.Orange);
 
             await ReplyAsync(string.Empty, false, builder);
-        }
-
-        private string GetRankImage(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.URL;
-        }
-
-        private string GetRatio(int? min, int? max)
-        {
-            if(min == 0  || min == null || max == 0 || max == null)
-            {
-                return "0";
-            }
-            return ((decimal)min / (decimal)max).ToString("#.##");
         }
     }
 }

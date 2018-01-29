@@ -195,12 +195,12 @@ namespace R6DB_Bot.Modules
             
             if (regionInfo != null)
             {
-                builder.AddInlineField(region + " Current Season",  "**Rank:** " + ToReadableRank(regionInfo.rank) + Environment.NewLine +
+                builder.AddInlineField(region + " Current Season",  "**Rank:** " + StringVisualiser.ToReadableRank(regionInfo.rank) + Environment.NewLine +
                                                                     "**MMR:** " + regionInfo.mmr.ToString("#.##") + Environment.NewLine +
                                                                     "**Highest MMR:** " + regionInfo.max_mmr.ToString("#.##") + Environment.NewLine +
-                                                                    "**Next Rank:** " + CeilingRankMMR(regionInfo.rank) + Environment.NewLine +
+                                                                    "**Next Rank:** " + StringVisualiser.CeilingRankMMR(regionInfo.rank) + Environment.NewLine +
                                                                     "**W/L/A:** " + regionInfo.wins + "/" + regionInfo.losses + "/" + regionInfo.abandons + Environment.NewLine +
-                                                                    "**W/L Ratio:** **" + GetRatio(regionInfo.wins, regionInfo.losses) + "**");
+                                                                    "**W/L Ratio:** **" + StringVisualiser.GetRatio(regionInfo.wins, regionInfo.losses) + "**");
 
                 if (rankNr < regionInfo.rank)
                 {
@@ -213,20 +213,18 @@ namespace R6DB_Bot.Modules
                 TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.ranked?.timePlayed);
 
                 builder.AddInlineField(region + " All Time","**Total Matches Played: ** " + model?.stats?.ranked?.played + Environment.NewLine +
-                                                            "**Total W/L (Ratio):** " + model?.stats?.ranked?.won + " / " + model?.stats?.ranked?.lost + " **(" + GetRatio(model?.stats?.ranked?.won, model?.stats?.ranked?.lost) + ")**" + Environment.NewLine +
-                                                            "**Total K/D (Ratio):** " + model?.stats?.ranked?.kills + " / " + model?.stats?.ranked?.deaths + " **(" + GetRatio(model?.stats?.ranked?.kills, model?.stats?.ranked?.deaths) + ")**");
+                                                            "**Total W/L (Ratio):** " + model?.stats?.ranked?.won + " / " + model?.stats?.ranked?.lost + " **(" + StringVisualiser.GetRatio(model?.stats?.ranked?.won, model?.stats?.ranked?.lost) + ")**" + Environment.NewLine +
+                                                            "**Total K/D (Ratio):** " + model?.stats?.ranked?.kills + " / " + model?.stats?.ranked?.deaths + " **(" + StringVisualiser.GetRatio(model?.stats?.ranked?.kills, model?.stats?.ranked?.deaths) + ")**");
             }
 
             if (model?.lastPlayed != null)
             {
                 TimeSpan rankSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.ranked);
                     
-                builder.AddInlineField("**Play Time**", ToReadableString(rankSeconds));
+                builder.AddInlineField("**Play Time**", StringVisualiser.ToReadableString(rankSeconds));
                 builder.AddInlineField("**Last Played**", model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss") ?? "Too long ago");
             }
 
-            builder.ImageUrl = "https://ubistatic-a.akamaihd.net/0058/prod/assets/images/season5-rank20.f31680a7.svg";
-            builder.Description = region + " Ranked information on " + platform + " for **" + model.name + "**";
 
             builder.Author = new EmbedAuthorBuilder
             {
@@ -241,63 +239,15 @@ namespace R6DB_Bot.Modules
                 Text = "Created by Dakpan#6955"
             };
 
-            builder.ThumbnailUrl = GetRankImage(rankNr);
+            builder.ThumbnailUrl = StringVisualiser.GetRankImage(rankNr);
+            builder.ImageUrl = "http://r6db.com/player/" + model?.id;
+            builder.Description = region + " Ranked information on " + platform + " for **" + model?.name + "**";
             builder.Timestamp = DateTime.UtcNow;
-            builder.Url = "http://r6db.com/player/" + model.id;
+            builder.Url = "http://r6db.com/player/" + model?.id;
 
             builder.WithColor(Color.Orange);
 
             await ReplyAsync(string.Empty, false, builder);
-        }
-
-        private string ToReadableString(TimeSpan span)
-        {
-            string formatted = string.Format("{0}{1}{2}{3}",
-                span.Duration().Days > 0 ? string.Format("{0:0} day{1} ", span.Days, span.Days == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Hours > 0 ? string.Format("{0:0} hour{1} " + Environment.NewLine, span.Hours, span.Hours == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Minutes > 0 ? string.Format("{0:0} minute{1} ", span.Minutes, span.Minutes == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().Seconds > 0 ? string.Format("{0:0} second{1} ", span.Seconds, span.Seconds == 1 ? String.Empty : "s") : string.Empty,
-                span.Duration().TotalHours > 0 ? string.Format("{0:0} total hour{1} ", span.TotalHours, span.TotalHours == 1 ? String.Empty : "s") : string.Empty);
-            
-            if (string.IsNullOrEmpty(formatted))
-            {
-                formatted = "0 seconds";
-            }
-
-            return formatted;
-        }
-
-        private int CeilingRankMMR(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.MMR;
-        }
-
-        private string ToReadableRank(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.Description;
-        }
-
-        private string GetRankImage(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.URL;
-        }
-
-        private string GetRatio(int? min, int? max)
-        {
-            if(min == 0  || min == null || max == 0 || max == null)
-            {
-                return "0";
-            }
-            return ((decimal)min / (decimal)max).ToString("#.##");
         }
     }
 }

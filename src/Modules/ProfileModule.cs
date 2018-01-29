@@ -81,7 +81,6 @@ namespace R6DB_Bot.Modules
 
         private async Task SendPlayerInformationMessage(PlayerModel model)
         {
-            var rankNr = 0;
             var builder = new EmbedBuilder();
 
             var region = regionEnum.GetAttribute<RegionInformation>().Description;            
@@ -103,7 +102,7 @@ namespace R6DB_Bot.Modules
             builder.AddField("Technical Information", "**ID:** " + model?.id + Environment.NewLine +
                                                       "**UserID:** " + model?.userId ?? "Unkown" + Environment.NewLine +
                                                       "**Profile Added:** " + model?.created_at.ToString("dd MMMM yyyy hh:mm:ss") + Environment.NewLine +
-                                                      "**Last Played:** " + model?.lastPlayed.last_played?.ToString("dd MMMM yyyy hh:mm:ss") + Environment.NewLine);           
+                                                      "**Last Played:** " + model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss") + Environment.NewLine);           
 
             if(model?.aliases != null)
             {
@@ -115,14 +114,13 @@ namespace R6DB_Bot.Modules
                 builder.AddField("Aliases", aliases);
             }
 
-            builder.ImageUrl = "https://ubistatic-a.akamaihd.net/0058/prod/assets/images/season5-rank20.f31680a7.svg";
-            builder.Description = region + " Player Profile information on " + platform + " for **" + model.name + "**";
+            builder.Description = region + " Player Profile information on " + platform + " for **" + model?.name + "**";
 
             builder.Author = new EmbedAuthorBuilder
             {
                 IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
                 Name = platform + " " + region + " Player Profile",
-                Url = "http://r6db.com/player/" + model.id
+                Url = "http://r6db.com/player/" + model?.id
             };
 
             builder.Footer = new EmbedFooterBuilder
@@ -132,20 +130,13 @@ namespace R6DB_Bot.Modules
             };
 
             builder.ThumbnailUrl = "https://uplay-avatars.s3.amazonaws.com/" + model?.id + "/default_146_146.png";
+            builder.ImageUrl = "http://r6db.com/player/" + model?.id;
             builder.Timestamp = DateTime.UtcNow;
-            builder.Url = "http://r6db.com/player/" + model.id;
+            builder.Url = "http://r6db.com/player/" + model?.id;
 
             builder.WithColor(Color.Orange);
 
             await ReplyAsync(string.Empty, false, builder);
-        }
-
-        private string GetRankImage(int? rank_nr)
-        {
-            rank_nr = rank_nr ?? 0;
-            var rankEnum = (RankEnum)rank_nr;
-            var info = rankEnum.GetAttribute<RankInformation>();
-            return info.URL;
         }
     }
 }
