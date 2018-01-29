@@ -39,8 +39,9 @@ discord | 98d7gf89df7g89gfg79fdgfd987fdg7 | [Discord Explained](https://github.c
   - [X] Get Support Link
   - [X] Get Contribute Link
   - [ ] Submit bugs/feedback
-  - [ ] Get number of active "guilds"
+  - [X] Get number of active "guilds"
 - [X] Get Operator Information
+- [X] Get Game Mode Information
 - [ ] Get General player statistics
 - [ ] Get a summary of the most used statistics
 - [ ] Get a graph of the players MMR flow
