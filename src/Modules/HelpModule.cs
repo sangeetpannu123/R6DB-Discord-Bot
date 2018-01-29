@@ -116,7 +116,14 @@ namespace R6DB_Bot.Modules
         [Summary("How to contribute to the project")]
         public async Task ContributeAsync()
         {
-            await ReplyAsync($"You can contribute to the project by helping me develop or give me feedback: https://github.com/jeanpoelie/R6DB-Discord-Bot/tree/development!");
+            await ReplyAsync($"You can contribute to the project by helping me develop or give me feedback: https://github.com/jeanpoelie/R6DB-Discord-Bot/tree/development");
+        }
+
+        [Command("todo"), Name("todo")]
+        [Summary("You can find the todo list here!")]
+        public async Task TODOAsync()
+        {
+            await ReplyAsync($"You can the stuff I still want to do & bug fixes here: https://github.com/jeanpoelie/R6DB-Discord-Bot/projects/1");
         }
 
         [Command("guild"), Alias("g"), Name("guild")]
