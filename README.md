@@ -43,7 +43,9 @@ discord | 98d7gf89df7g89gfg79fdgfd987fdg7 | [Discord Explained](https://github.c
 - [X] Get Operator Information
 - [X] Get Game Mode Information
 - [ ] Get General player statistics
+- [ ] Get Seasonal stats
 - [ ] Get a summary of the most used statistics
+- [ ] Get Leaderboard
 - [ ] Get a graph of the players MMR flow
   - [ ] Option for X number of matches
   - [ ] Option for X number of days

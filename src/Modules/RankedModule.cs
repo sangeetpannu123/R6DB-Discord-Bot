@@ -221,7 +221,7 @@ namespace R6DB_Bot.Modules
             {
                 TimeSpan rankSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.ranked);
                     
-                builder.AddInlineField("**Play Time**", StringVisualiser.ToReadableString(rankSeconds));
+                builder.AddInlineField("**Play Time**", StringVisualiser.ToReadablePlaytime(rankSeconds));
                 builder.AddInlineField("**Last Played**", model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss") ?? "Too long ago");
             }
 

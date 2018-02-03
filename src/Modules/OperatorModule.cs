@@ -446,7 +446,7 @@ namespace R6DB_Bot.Modules
                                                 "**Ratio: " + StringVisualiser.GetRatio(operatorModel.kills, operatorModel.deaths) + "**");
             
             TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)operatorModel.timePlayed);
-            builder.AddField("Time Played", StringVisualiser.ToReadableString(operatorTimePlayed));
+            builder.AddField("Time Played", StringVisualiser.ToReadablePlaytime(operatorTimePlayed));
 
             builder.Description = $"**{operatorModel.name}** Operator information for player **{model?.name}** in **{region}** on **{platform}**";
 

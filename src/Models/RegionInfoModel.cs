@@ -70,5 +70,34 @@ namespace R6DB_Bot.Models
             skill_mean  = fullModel?.rank?.apac?.skill_mean ?? 0;
             wins        = fullModel?.rank?.apac?.wins ?? 0;
         }
+
+        public void SetHighestRegion(PlayerModel model)
+        {
+            var EU_MMR = model?.rank?.emea?.mmr ?? 0;
+            var NA_MMR = model?.rank?.ncsa?.mmr ?? 0;
+            var ASIA_MMR = model?.rank?.apac?.mmr ?? 0;
+
+            if (EU_MMR > NA_MMR)
+            {
+                if (EU_MMR > ASIA_MMR)
+                {
+                    SetEURegionInfo(model);
+                } else
+                {
+                    SetASIARegionInfo(model);
+                }
+            }
+            else
+            {
+                if (NA_MMR > ASIA_MMR)
+                {
+                    SetNARegionInfo(model);
+                }
+                else
+                {
+                    SetASIARegionInfo(model);
+                }
+            }
+        }
     }
 }

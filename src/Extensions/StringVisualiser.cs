@@ -7,7 +7,7 @@ namespace R6DB_Bot.Extensions
 {
     public static class StringVisualiser
     {
-        public static string ToReadableString(TimeSpan span)
+        public static string ToReadablePlaytime(TimeSpan span)
         {
             string formatted = string.Format("{0}{1}{2}{3}",
                 span.Duration().Days > 0 ? string.Format("{0:0} day{1} ", span.Days, span.Days == 1 ? String.Empty : "s") : string.Empty,
@@ -23,6 +23,18 @@ namespace R6DB_Bot.Extensions
 
             return formatted;
         }
+        public static string ToReadablePlaytimeHours(TimeSpan span)
+        {
+            string formatted = string.Format("{0}", span.Duration().TotalHours > 0 ? string.Format("{0:0} hour{1} ", span.TotalHours, span.TotalHours == 1 ? String.Empty : "s") : string.Empty);
+
+            if (string.IsNullOrEmpty(formatted))
+            {
+                formatted = "0 seconds";
+            }
+
+            return formatted;
+        }
+
 
         public static int CeilingRankMMR(int? rank_nr)
         {

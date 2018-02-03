@@ -201,7 +201,7 @@ namespace R6DB_Bot.Modules
             {
                 TimeSpan casualSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.casual);
                     
-                builder.AddInlineField("**Play Time**", StringVisualiser.ToReadableString(casualSeconds));
+                builder.AddInlineField("**Play Time**", StringVisualiser.ToReadablePlaytime(casualSeconds));
                 builder.AddInlineField("**Last Played**", model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss"));
             }
 
