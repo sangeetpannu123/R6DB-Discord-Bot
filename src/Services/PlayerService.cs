@@ -70,7 +70,7 @@ namespace R6DB_Bot.Services
                 }
             }
 
-            var playerURL = $"{baseUrl}/Players/{model.id}";
+            var playerURL = $"{baseUrl}/Players/{model.id}?&update=true";
 
             var queryParams2 = new List<KeyValuePair<string, string>>();
             var response2 = await HttpRequestFactory.Get(playerURL, xAppId, queryParams2);

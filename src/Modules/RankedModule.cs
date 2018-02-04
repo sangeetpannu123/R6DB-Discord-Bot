@@ -161,26 +161,70 @@ namespace R6DB_Bot.Modules
         [Summary("Get Default Region Rank Statistics")]
         public async Task GetRanks([Remainder]string text)
         {
-            var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
-            if (model?.guessed != null && model.guessed.IsGuessed)
+            try
             {
-                await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
-            }
+                var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
+                if (model?.guessed != null && model.guessed.IsGuessed)
+                {
+                    await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
+                }
 
-            var regionInfo = new RegionInfoModel();
-            switch (regionEnum)
-            {
-                case RegionEnum.EMEA:
-                    regionInfo.SetEURegionInfo(model);
-                    break;
-                case RegionEnum.APAC:
-                    regionInfo.SetASIARegionInfo(model);
-                    break;
-                case RegionEnum.NCSA:
-                    regionInfo.SetNARegionInfo(model);
-                    break;
+                var regionInfo = new RegionInfoModel();
+                switch (regionEnum)
+                {
+                    case RegionEnum.EMEA:
+                        regionInfo.SetEURegionInfo(model);
+                        break;
+                    case RegionEnum.APAC:
+                        regionInfo.SetASIARegionInfo(model);
+                        break;
+                    case RegionEnum.NCSA:
+                        regionInfo.SetNARegionInfo(model);
+                        break;
+                }
+                await SendRankedInformationMessage(model, regionInfo);
             }
-            await SendRankedInformationMessage(model, regionInfo);
+            catch (Exception ex)
+            {
+                await ReplyAsync($"Something went wrong, I send a message to the developers they will look into it, please try again later!");
+
+
+                var builder = new EmbedBuilder();
+                builder.AddField("Message", text);
+                builder.AddField("Exception Message", ex.Message);
+                var stackTrace = ex.StackTrace;
+                var stackTraceLength = stackTrace.Length;
+                var nr_of_stacktraces = (stackTrace.Length / 1000) + 1;
+
+                for (var i = 0; i < nr_of_stacktraces; i++)
+                {
+                    builder.AddField("Exception Stacktrace Nr " + (i + 1), stackTrace.Substring(0, 1000));
+                }
+
+
+                builder.Author = new EmbedAuthorBuilder
+                {
+                    IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
+                    Name = "Error Caught",
+                    //Url = "http://r6db.com/player/" + model.id
+                };
+
+                builder.Footer = new EmbedFooterBuilder
+                {
+                    IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
+                    Text = "Created by Dakpan#6955"
+                };
+
+                //builder.ThumbnailUrl = StringVisualiser.GetRankImage(rankNr);
+                //builder.ImageUrl = "http://r6db.com/player/" + model?.id;
+                builder.Timestamp = DateTime.UtcNow;
+                //builder.Url = "http://r6db.com/player/" + model?.id;
+
+                builder.WithColor(Color.Red);
+
+                var u = Context.Guild.GetUser(132556381046833152);
+                await u.SendMessageAsync(string.Empty, false, builder);
+            }
         }
 
         private async Task SendRankedInformationMessage(PlayerModel model, RegionInfoModel regionInfo)

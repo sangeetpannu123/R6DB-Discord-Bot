@@ -18,7 +18,7 @@ namespace R6DB_Bot.Modules
             _service = service;
             _config = config;
         }
-        
+
         [Command("help")]
         public async Task HelpAsync()
         {
