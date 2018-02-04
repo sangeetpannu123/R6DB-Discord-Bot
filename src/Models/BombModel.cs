@@ -6,15 +6,15 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("bestScore")]
-        public int bestScore { get; set; }
+        public int? bestScore { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("played")]
-        public int played { get; set; }
+        public int? played { get; set; }
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
     }
 }

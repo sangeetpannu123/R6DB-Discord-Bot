@@ -38,7 +38,7 @@ discord | 98d7gf89df7g89gfg79fdgfd987fdg7 | [Discord Explained](https://github.c
   - [X] Get Invite Link
   - [X] Get Support Link
   - [X] Get Contribute Link
-  - [ ] Submit bugs/feedback
+  - [X] Submit bugs/feedback
   - [X] Get number of active "guilds"
 - [X] Get Operator Information
 - [X] Get Game Mode Information
@@ -51,7 +51,7 @@ discord | 98d7gf89df7g89gfg79fdgfd987fdg7 | [Discord Explained](https://github.c
   - [ ] Option for X number of days
   - [ ] Make the graph animated instead of static.
 - [ ] Option to compare players
-- [ ] Option to fill in a player or match ESL link & get full stats on all involved players.
+- [X] **in beta** Option to fill in a player or match ESL link & get full stats on all involved players.
 - [ ] Be able to "register" to get information about yourself faster
 - [ ] Be able to create a "guild" leaderboard for registered people in the "guild"
 

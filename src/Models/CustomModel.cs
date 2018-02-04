@@ -6,6 +6,6 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
     }
 }

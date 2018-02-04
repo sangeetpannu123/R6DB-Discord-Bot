@@ -6,7 +6,7 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("season")]
-        public int season { get; set; }
+        public int? season { get; set; }
 
         [JsonProperty("apac")]
         public ApacModel apac { get; set; }

@@ -10,6 +10,6 @@ namespace R6DB_Bot.Models
         public string name { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTime created_at { get; set; }
+        public DateTime? created_at { get; set; }
     }
 }

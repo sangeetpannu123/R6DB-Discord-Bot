@@ -186,19 +186,53 @@ namespace R6DB_Bot.Modules
             }
             catch (Exception ex)
             {
+
+                if(ex.Message.Contains("Failed to fetch") || ex.Message.Contains("BadGateway"))
+                {
+                    await ReplyAsync($"R6DB is down, we will be back shortly, if this takes more than 24 hours send a message to Dakpan#6955");
+                    return;
+                }
+
                 await ReplyAsync($"Something went wrong, I send a message to the developers they will look into it, please try again later!");
 
 
                 var builder = new EmbedBuilder();
                 builder.AddField("Message", text);
-                builder.AddField("Exception Message", ex.Message);
+
+
+                //Exception Message splitting
+                var exceptionMessage = ex.Message;
+                var exceptionMessageLength = exceptionMessage.Length;
+                var nr_of_exceptionMessages = (exceptionMessage.Length / 1000) + 1;
+
+                if (nr_of_exceptionMessages == 1)
+                {
+                    builder.AddField("Exception Message", exceptionMessage);
+                }
+                else
+                {
+                    for (var i = 0; i < nr_of_exceptionMessages; i++)
+                    {
+                        builder.AddField("Exception Message Nr " + (i + 1), exceptionMessage.Substring(0, 1000));
+                    }
+                }
+                
+
+                //Stacktrace splitting
                 var stackTrace = ex.StackTrace;
                 var stackTraceLength = stackTrace.Length;
                 var nr_of_stacktraces = (stackTrace.Length / 1000) + 1;
 
-                for (var i = 0; i < nr_of_stacktraces; i++)
+                if (nr_of_stacktraces == 1)
                 {
-                    builder.AddField("Exception Stacktrace Nr " + (i + 1), stackTrace.Substring(0, 1000));
+                    builder.AddField("Exception Stacktrace", stackTrace);
+                }
+                else
+                {
+                    for (var i = 0; i < nr_of_stacktraces; i++)
+                    {
+                        builder.AddField("Exception Stacktrace Nr " + (i + 1), stackTrace.Substring(0, 1000));
+                    }
                 }
 
 

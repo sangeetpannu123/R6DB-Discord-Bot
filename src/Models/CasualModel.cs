@@ -6,21 +6,21 @@ namespace R6DB_Bot.Models
     {
 
         [JsonProperty("deaths")]
-        public int deaths { get; set; }
+        public int? deaths { get; set; }
 
         [JsonProperty("kills")]
-        public int kills { get; set; }
+        public int? kills { get; set; }
 
         [JsonProperty("lost")]
-        public int lost { get; set; }
+        public int? lost { get; set; }
 
         [JsonProperty("played")]
-        public int played { get; set; }
+        public int? played { get; set; }
 
         [JsonProperty("timePlayed")]
-        public int timePlayed { get; set; }
+        public int? timePlayed { get; set; }
 
         [JsonProperty("won")]
-        public int won { get; set; }
+        public int? won { get; set; }
     }
 }

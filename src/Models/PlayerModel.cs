@@ -21,16 +21,16 @@ namespace R6DB_Bot.Models
         public object flair { get; set; }
 
         [JsonProperty("level")]
-        public int level { get; set; }
+        public int? level { get; set; }
 
         [JsonProperty("active")]
         public bool? active { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTime created_at { get; set; }
+        public DateTime? created_at { get; set; }
 
         [JsonProperty("updated_at")]
-        public DateTime updated_at { get; set; }
+        public DateTime? updated_at { get; set; }
 
         [JsonProperty("lastPlayed")]
         public LastPlayedModel lastPlayed { get; set; }
@@ -57,10 +57,10 @@ namespace R6DB_Bot.Models
         public IList<AliasModel> aliases { get; set; }
 
         [JsonProperty("serverTime")]
-        public DateTime serverTime { get; set; }
+        public DateTime? serverTime { get; set; }
 
         [JsonProperty("updateAvailableAt")]
-        public DateTime updateAvailableAt { get; set; }
+        public DateTime? updateAvailableAt { get; set; }
 
         [JsonIgnore]
         public GuessedModel guessed { get; set; }

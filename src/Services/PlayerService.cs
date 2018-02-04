@@ -40,6 +40,12 @@ namespace R6DB_Bot.Services
 
             var response = await HttpRequestFactory.Get(requestUri, xAppId, queryParams);
             var responseString = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("Error from R6DB API, code: " + response.StatusCode + " text: " + responseString);
+            }
+
             var jsonSerializerSettings = new JsonSerializerSettings
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore
@@ -70,11 +76,17 @@ namespace R6DB_Bot.Services
                 }
             }
 
-            var playerURL = $"{baseUrl}/Players/{model.id}?&update=true";
+            var playerURL = $"{baseUrl}/Players/{model.id}";
 
             var queryParams2 = new List<KeyValuePair<string, string>>();
             var response2 = await HttpRequestFactory.Get(playerURL, xAppId, queryParams2);
             var responseString2 = await response2.Content.ReadAsStringAsync();
+
+            if (!response2.IsSuccessStatusCode)
+            {
+                throw new Exception("Error from R6DB API, code: " + response2.StatusCode + " text: " + responseString2);
+            }
+
             var jsonSerializerSettings2 = new JsonSerializerSettings
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore

@@ -47,58 +47,41 @@ namespace R6DB_Bot.Modules
         [Summary("Get information about ESL matches")]
         public async Task GetESLMatchAsync([Remainder]string text)
         {
-            //check if its an URL
-            //if it is
-                //split complete string by "/" and get second to last value.
-            //else
-                //check if its an ID
-                // if it is use that ID
-
-            var pageUrl = "https://play.eslgaming.com/rainbowsix/europe-pc/r6siege/major/go4r6-italy/cup-17/match/35655337/";
-            // Call the page and get the generated HTML
-            var doc = new HtmlAgilityPack.HtmlDocument();
-            HtmlAgilityPack.HtmlNode.ElementsFlags["br"] = HtmlAgilityPack.HtmlElementFlag.Empty;
-            doc.OptionWriteEmptyNodes = true;
-
-            try
+            if (!text.Contains("play.eslgaming"))
             {
-                var webRequest = WebRequest.Create(pageUrl);
-                Stream stream = webRequest.GetResponse().GetResponseStream();
-                doc.Load(stream);
-                stream.Close();
-            }
-            catch (System.UriFormatException uex)
-            {
-                //Log.Fatal("There was an error in the format of the url: " + pageUrl, uex);
-                throw;
-            }
-            catch (System.Net.WebException wex)
-            {
-                //Log.Fatal("There was an error connecting to the url: " + pageUrl, wex);
-                throw;
+                await ReplyAsync("Please provide a valid ESL match URL");
+                return;
             }
 
-            var baseUrl = "https://play.eslgaming.com";
-            //get the div by id and then get the inner text
-            var team1_td = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td");
-            var team1_a = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td/a");
-            var team1_url = baseUrl+team1_a.Attributes["href"].Value;
-            var team1_name = Regex.Replace(team1_td.InnerText, @"\n", string.Empty);
-            team1_name = team1_name.TrimEnd().TrimStart();
+            await ReplyAsync("I am gathering all the data for this match, brb!");
 
-            var team2_td = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td[last()]");
-            var team2_a = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td[last()]/a");
-            var team2_url = baseUrl+team2_a.Attributes["href"].Value;
-            var team2_name = Regex.Replace(team2_td.InnerText, @"\n", string.Empty);
-            team2_name = team2_name.TrimEnd().TrimStart();
+            var model = GetESLMatchInfoByURL(text);
 
+            await SendMatchMessage(model);
 
+            foreach (var team in model.Teams)
+            {
+                GetESLTeamPlayersByURL(team);
+
+                await SendTeamMessage(team);
+
+                foreach(var player in team.Players)
+                {
+                    await SendPlayerMessage(player);
+                }
+            }
+        }
+
+        private async Task SendMatchMessage(ESLMatchModel model)
+        {
             var builder = new EmbedBuilder();
 
-            var placementInfo = "";
+            builder.AddField("Match Information", $"Found a match; **" + model.MatchName + "**");
 
-            builder.AddField("Match Information", $"Found a match; /n **" + team1_name + "** vs. **" + team2_name + "**");
-
+            foreach (var team in model.Teams)
+            {
+                builder.AddInlineField("Team Info Team", team.TeamName);
+            }
 
             builder.Description = "Match Found";
 
@@ -123,70 +106,110 @@ namespace R6DB_Bot.Modules
             builder.WithColor(Color.Orange);
 
             await ReplyAsync(string.Empty, false, builder);
+        }
+
+        private ESLMatchModel GetESLMatchInfoByURL(string text)
+        {
+            var model = new ESLMatchModel
+            {
+                MatchURL = text,
+                MatchID = GetIDFromURL(text)
+            };
+            model.Teams = new List<ESLTeamModel>();
+
+            var pageUrl = $"https://play.eslgaming.com/match/{model.MatchID}/";
+            // Call the page and get the generated HTML
+            var doc = new HtmlAgilityPack.HtmlDocument();
+            HtmlAgilityPack.HtmlNode.ElementsFlags["br"] = HtmlAgilityPack.HtmlElementFlag.Empty;
+            doc.OptionWriteEmptyNodes = true;
+
+            try
+            {
+                var webRequest = WebRequest.Create(pageUrl);
+                Stream stream = webRequest.GetResponse().GetResponseStream();
+                doc.Load(stream);
+                stream.Close();
+            }
+            catch (System.UriFormatException uex)
+            {
+                //Log.Fatal("There was an error in the format of the url: " + pageUrl, uex);
+                throw;
+            }
+            catch (System.Net.WebException wex)
+            {
+                //Log.Fatal("There was an error connecting to the url: " + pageUrl, wex);
+                throw;
+            }
+
+            var ESL_baseUrl = "https://play.eslgaming.com";
+
+            var team1 = new ESLTeamModel();
+
+            //get the div by id and then get the inner text
+            var team1_td = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td");
+            var team1_a = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td/a");
+            var team1_url = ESL_baseUrl + team1_a.Attributes["href"].Value;
+            var team1_name = Regex.Replace(team1_td.InnerText, @"\n", string.Empty);
+            team1_name = team1_name.TrimEnd().TrimStart();
+
+            team1.TeamName = team1_name;
+            team1.TeamURL = team1_url;
+
+            model.Teams.Add(team1);
+
+            var team2 = new ESLTeamModel();
+
+            var team2_td = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td[last()]");
+            var team2_a = doc.DocumentNode.SelectSingleNode("//div[@class='esl-content']/table/tr[3]/td/table/tr/td[last()]/a");
+            var team2_url = ESL_baseUrl + team2_a.Attributes["href"].Value;
+            var team2_name = Regex.Replace(team2_td.InnerText, @"\n", string.Empty);
+            team2_name = team2_name.TrimEnd().TrimStart();
+
+            team2.TeamName = team2_name;
+            team2.TeamURL = team2_url;
+
+            model.Teams.Add(team2);
+
+            return model;
         }
 
         [Command("esl team"), Alias("et"), Name("esl team")]
         [Summary("Get information about ESL Team")]
         public async Task GetESLTeamAsync([Remainder]string text)
         {
-            //check if its an URL
-            //if it is
-                //split complete string by "/" and get second to last value.
-            //else
-                //check if its an ID
-                // if it is use that ID
-
-            var pageUrl = "https://play.eslgaming.com/team/members/12077141/";
-
-            // Call the page and get the generated HTML
-            var doc = new HtmlAgilityPack.HtmlDocument();
-            HtmlAgilityPack.HtmlNode.ElementsFlags["br"] = HtmlAgilityPack.HtmlElementFlag.Empty;
-            doc.OptionWriteEmptyNodes = true;
-
-            try
+            if(!text.Contains("play.eslgaming"))
             {
-                var webRequest = WebRequest.Create(pageUrl);
-                Stream stream = webRequest.GetResponse().GetResponseStream();
-                doc.Load(stream);
-                stream.Close();
+                await ReplyAsync("Please provide a valid ESL team URL");
+                return;
             }
-            catch (System.UriFormatException uex)
-            {
-                //Log.Fatal("There was an error in the format of the url: " + pageUrl, uex);
-                throw;
-            }
-            catch (System.Net.WebException wex)
-            {
-                //Log.Fatal("There was an error connecting to the url: " + pageUrl, wex);
-                throw;
-            }
-            
-            //get the div by id and then get the inner text
-            var tables = doc.DocumentNode.SelectNodes("//table[@width='540']");
 
-            foreach(var table in tables)
+            await ReplyAsync("I am searching through all of the ESL website for the team, this might take a little bit, brb!");
+
+            var ESLTeam = new ESLTeamModel
             {
-                var trs = table.SelectNodes("//tr");
-                foreach(var tr in trs)
-                {
-                    var tds = tr.SelectNodes("//td");
-                    var i = 0;
-                    
-                    foreach(var td in tds)
-                    {
-                        if(td.InnerText.Contains("Team-Captain"))
-                        {
-                            Console.WriteLine("FOUND THE CAPTAIN!");
-                        }
-                        i++;
-                    }
-                }
+                TeamURL = text
+            };
+
+            GetESLTeamPlayersByURL(ESLTeam);
+
+            await SendTeamMessage(ESLTeam);
+
+            foreach(var player in ESLTeam.Players)
+            {
+                await SendPlayerMessage(player);
+            }
+        }
+
+        private async Task SendTeamMessage(ESLTeamModel model)
+        {
+            if (string.IsNullOrEmpty(model.TeamID))
+            {
+                GetESLTeamPlayersByURL(model);
             }
 
             var builder = new EmbedBuilder();
 
-            //builder.AddField("Match Information", $"Found a match; /n **" + team1_name + "** vs. **" + team2_name + "**");
-
+            builder.AddField("Team Information", $"We found a team with these (uPlay) player names ; **" + model.Players.Select(c => c.PlayerName).JoinWith(Environment.NewLine) + "**");
 
             builder.Description = "Match Found";
 
@@ -213,12 +236,41 @@ namespace R6DB_Bot.Modules
             await ReplyAsync(string.Empty, false, builder);
         }
 
+        private string GetESLPlayerByURL(string text)
+        {
+            var player_id = GetIDFromURL(text);
+            var uplay_name = GetUplayName(player_id);
+            return uplay_name;
+        }
+
         [Command("esl player"), Alias("ep"), Name("esl player")]
         [Summary("Get information about a ESL player")]
         public async Task GetESLPlayerAsync([Remainder]string text)
         {
-            var uplay_name = GetESLPlayerByURL(text);
-            var model = await PlayerService.GetPlayerInfoFromR6DB(uplay_name, baseUrl, xAppId);
+            if (!text.Contains("play.eslgaming"))
+            {
+                await ReplyAsync("Please provide a valid ESL player URL");
+                return;
+            }
+
+            await ReplyAsync("I am gathering all the data for this player, brb!");
+
+            var ESLPlayer = new ESLPlayerModel
+            {
+                PlayerURL = text
+            };
+
+            await SendPlayerMessage(ESLPlayer);
+        }
+
+        private async Task SendPlayerMessage(ESLPlayerModel ESLModel)
+        {
+            if (string.IsNullOrEmpty(ESLModel.PlayerName))
+            {
+                ESLModel.PlayerName = GetESLPlayerByURL(ESLModel.PlayerURL);
+            }
+
+            var model = await PlayerService.GetPlayerInfoFromR6DB(ESLModel.PlayerName, baseUrl, xAppId);
             var builder = new EmbedBuilder();
 
             var regionInfo = new RegionInfoModel();
@@ -230,7 +282,7 @@ namespace R6DB_Bot.Modules
 
                 if (regionInfo != null)
                 {
-                    informationString += "Rank: **" + StringVisualiser.ToReadableRank(regionInfo.rank) +"**"+ Environment.NewLine +
+                    informationString += "Rank: **" + StringVisualiser.ToReadableRank(regionInfo.rank) + "**" + Environment.NewLine +
                                          "MMR: **" + regionInfo.mmr.ToString("#.##") + "**" + Environment.NewLine +
                                          "W/L Ratio: **" + StringVisualiser.GetRatio(regionInfo.wins, regionInfo.losses) + "**" + Environment.NewLine;
                 }
@@ -254,7 +306,7 @@ namespace R6DB_Bot.Modules
                         var op = attack_operators[i];
 
                         TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)op.timePlayed);
-                        attackOperatorInformation +=   "**Operator:** " + op.name + Environment.NewLine +
+                        attackOperatorInformation += "**Operator:** " + op.name + Environment.NewLine +
                                                        "**W/L Ratio:** " + StringVisualiser.GetRatio(op.won, op.lost) + Environment.NewLine +
                                                        "**K/D Ratio:** " + StringVisualiser.GetRatio(op.kills, op.deaths) + Environment.NewLine +
                                                        "**Play Time:** " + StringVisualiser.ToReadablePlaytimeHours(operatorTimePlayed) + Environment.NewLine + Environment.NewLine;
@@ -264,9 +316,9 @@ namespace R6DB_Bot.Modules
 
 
                     var defend_operators = model?.stats?.Operator.GetAllDefendOperators();
-                    defend_operators = defend_operators.OrderByDescending(m => m.timePlayed).ToList(); 
+                    defend_operators = defend_operators.OrderByDescending(m => m.timePlayed).ToList();
 
-                    for(var i = 0; i < 3; i ++)
+                    for (var i = 0; i < 3; i++)
                     {
                         var op = defend_operators[i];
 
@@ -274,7 +326,7 @@ namespace R6DB_Bot.Modules
                         defendOperatorInformation += "Operator: **" + op.name + "**" + Environment.NewLine +
                                                "W/L Ratio: **" + StringVisualiser.GetRatio(op.won, op.lost) + "**" + Environment.NewLine +
                                                "K/D Ratio: **" + StringVisualiser.GetRatio(op.kills, op.deaths) + "**" + Environment.NewLine +
-                                               "Play Time: **" + StringVisualiser.ToReadablePlaytimeHours(operatorTimePlayed) + "**" 
+                                               "Play Time: **" + StringVisualiser.ToReadablePlaytimeHours(operatorTimePlayed) + "**"
                                                + Environment.NewLine + Environment.NewLine;
                     }
                 }
@@ -282,10 +334,10 @@ namespace R6DB_Bot.Modules
                 builder.AddInlineField("**Most Played** ***DEF*** **Operator**", defendOperatorInformation);
             }
 
-            var nameCorrect = model?.name.Trim().ToLower().Equals(uplay_name.Trim().ToLower());
+            var nameCorrect = model?.name.Trim().ToLower().Equals(ESLModel.PlayerName.Trim().ToLower());
             var nameCorrectText = nameCorrect == true ? "**Correct**" : $"**False** is actual name is **{model?.name}**";
 
-            builder.Description = $"Found a player with the ESL account name **{uplay_name}**. {Environment.NewLine}This name is {nameCorrectText} according to R6DB.";
+            builder.Description = $"Found a player with the ESL account name **{ESLModel.PlayerName}**. {Environment.NewLine}This name is {nameCorrectText} according to R6DB.";
 
             builder.Author = new EmbedAuthorBuilder
             {
@@ -310,16 +362,22 @@ namespace R6DB_Bot.Modules
             await ReplyAsync(string.Empty, false, builder);
         }
 
-        private string GetESLPlayerByURL(string text)
+        private void GetESLTeamPlayersByURL(ESLTeamModel model)
         {
-            var player_id = GetPlayerID(text);
-            var uplay_name = GetUplayGameAccount(player_id);
-            return uplay_name; 
+            model.TeamID = GetIDFromURL(model.TeamURL);
+            GetUplayNamesFromTeamPage(model);
         }
 
-        private string GetPlayerID(string URL)
+        public string GetIDFromURL(string url)
         {
-            var pageUrl = URL;
+            var pageUrl = url;
+            var splitted_url = pageUrl.Split("/");
+            return splitted_url[splitted_url.Length - 2];
+        }
+
+        private void GetUplayNamesFromTeamPage(ESLTeamModel model)
+        {
+            var pageUrl = $"https://play.eslgaming.com/team/members/{model.TeamID}/";
 
             // Call the page and get the generated HTML
             var doc = new HtmlAgilityPack.HtmlDocument();
@@ -345,13 +403,25 @@ namespace R6DB_Bot.Modules
             }
 
             //get the div by id and then get the inner text
-            var player_id_span = doc.DocumentNode.SelectSingleNode("//span[@class='TextSP']");
-            var player_id_text = player_id_span.InnerText;
-            var player_id = Regex.Replace(player_id_text, @"[^\d]", "");
-            return player_id;
-        }
+            var tables = doc.DocumentNode.SelectNodes("//table//tr//td//table//tr//td//a");
 
-        private string GetUplayGameAccount(string playerID)
+            var players = new List<ESLPlayerModel>();
+
+            foreach(var table in tables)
+            {
+                var player_url = table.Attributes["href"].Value;
+                var player_url_splitted = player_url.Split("/");
+                var player_id = player_url_splitted[player_url_splitted.Length - 2];
+                players.Add(new ESLPlayerModel
+                {
+                    PlayerName = GetUplayName(player_id)
+                });
+            }
+
+            model.Players = players;
+        }
+        
+        private string GetUplayName(string playerID)
         {
             var pageUrl = $"https://play.eslgaming.com/player/gameaccounts/{playerID}/";
 
