@@ -133,7 +133,7 @@ namespace R6DB_Bot.Modules
         [Summary("Get invite link")]
         public async Task InviteAsync()
         {
-            await ReplyAsync($"Click on the link to invite me https://discordapp.com/oauth2/authorize?client_id={_config["client-id"]}scope=bot&permissions=19456");
+            await ReplyAsync($"Click on the link to invite me https://discordapp.com/oauth2/authorize?client_id={_config["client-id"]}&scope=bot&permissions=19456");
         }
 
         [Command("support"), Alias("s"), Name("support")]
