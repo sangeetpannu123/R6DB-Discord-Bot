@@ -267,6 +267,11 @@ namespace R6DB_Bot.Modules
         {
             if (string.IsNullOrEmpty(ESLModel.PlayerName))
             {
+                if(ESLModel.PlayerURL == null)
+                {
+                    return;
+                }
+
                 ESLModel.PlayerName = GetESLPlayerByURL(ESLModel.PlayerURL);
             }
 
@@ -305,7 +310,7 @@ namespace R6DB_Bot.Modules
                     {
                         var op = attack_operators[i];
 
-                        TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)op.timePlayed);
+                        TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)(op.timePlayed ?? 0));
                         attackOperatorInformation += "**Operator:** " + op.name + Environment.NewLine +
                                                        "**W/L Ratio:** " + StringVisualiser.GetRatio(op.won, op.lost) + Environment.NewLine +
                                                        "**K/D Ratio:** " + StringVisualiser.GetRatio(op.kills, op.deaths) + Environment.NewLine +
@@ -322,7 +327,7 @@ namespace R6DB_Bot.Modules
                     {
                         var op = defend_operators[i];
 
-                        TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)op.timePlayed);
+                        TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)(op.timePlayed ?? 0));
                         defendOperatorInformation += "Operator: **" + op.name + "**" + Environment.NewLine +
                                                "W/L Ratio: **" + StringVisualiser.GetRatio(op.won, op.lost) + "**" + Environment.NewLine +
                                                "K/D Ratio: **" + StringVisualiser.GetRatio(op.kills, op.deaths) + "**" + Environment.NewLine +

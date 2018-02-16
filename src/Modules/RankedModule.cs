@@ -164,6 +164,12 @@ namespace R6DB_Bot.Modules
             try
             {
                 var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
+                if(model == null)
+                {
+                    await ReplyAsync($"We found no players with the name **{text}**, please be more specific with the name/region/platform.");
+                    return;
+                }
+
                 if (model?.guessed != null && model.guessed.IsGuessed)
                 {
                     await ReplyAsync($"We found **{model.guessed.PlayersFound}** likely results for the name **{text}** if the following stats are not the once you are looking for, please be more specific with the name/region/platform.");
@@ -288,7 +294,7 @@ namespace R6DB_Bot.Modules
 
             if(model?.stats?.ranked != null)
             {
-                TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.ranked?.timePlayed);
+                TimeSpan timePlayed = TimeSpan.FromSeconds((double)(model?.stats?.ranked?.timePlayed ?? 0));
 
                 builder.AddInlineField(region + " All Time","**Total Matches Played: ** " + model?.stats?.ranked?.played + Environment.NewLine +
                                                             "**Total W/L (Ratio):** " + model?.stats?.ranked?.won + " / " + model?.stats?.ranked?.lost + " **(" + StringVisualiser.GetRatio(model?.stats?.ranked?.won, model?.stats?.ranked?.lost) + ")**" + Environment.NewLine +
@@ -297,7 +303,7 @@ namespace R6DB_Bot.Modules
 
             if (model?.lastPlayed != null)
             {
-                TimeSpan rankSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.ranked);
+                TimeSpan rankSeconds = TimeSpan.FromSeconds((double)(model?.lastPlayed?.ranked ?? 0));
                     
                 builder.AddInlineField("**Play Time**", StringVisualiser.ToReadablePlaytime(rankSeconds));
                 builder.AddInlineField("**Last Played**", model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss") ?? "Too long ago");
@@ -308,7 +314,7 @@ namespace R6DB_Bot.Modules
             {
                 IconUrl = "https://i.redd.it/iznunq2m8vgy.png",
                 Name = platform + " " + region + " Ranked Information",
-                Url = "http://r6db.com/player/" + model.id
+                Url = "http://r6db.com/player/" + model?.id
             };
 
             builder.Footer = new EmbedFooterBuilder

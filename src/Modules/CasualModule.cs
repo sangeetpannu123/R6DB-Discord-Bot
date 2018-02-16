@@ -271,7 +271,7 @@ namespace R6DB_Bot.Modules
 
             if(model?.stats?.casual != null)
             {
-                TimeSpan timePlayed = TimeSpan.FromSeconds((double)model?.stats?.casual?.timePlayed);
+                TimeSpan timePlayed = TimeSpan.FromSeconds((double)(model?.stats?.casual?.timePlayed ?? 0));
 
                 builder.AddInlineField(region + " All Time","**Total Matches Played: ** " + model?.stats?.casual?.played + Environment.NewLine +
                                                             "**Total W/L (Ratio):** " + model?.stats?.casual?.won + " / " + model?.stats?.casual?.lost + " **(" + StringVisualiser.GetRatio(model?.stats?.casual?.won, model?.stats?.casual?.lost) + ")**" + Environment.NewLine +
@@ -280,7 +280,7 @@ namespace R6DB_Bot.Modules
 
             if (model?.lastPlayed != null)
             {
-                TimeSpan casualSeconds = TimeSpan.FromSeconds((double)model?.lastPlayed?.casual);
+                TimeSpan casualSeconds = TimeSpan.FromSeconds((double)(model?.lastPlayed?.casual ?? 0));
                     
                 builder.AddInlineField("**Play Time**", StringVisualiser.ToReadablePlaytime(casualSeconds));
                 builder.AddInlineField("**Last Played**", model?.lastPlayed?.last_played?.ToString("dd MMMM yyyy hh:mm:ss"));

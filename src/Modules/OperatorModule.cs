@@ -525,7 +525,7 @@ namespace R6DB_Bot.Modules
             builder.AddInlineField("Kill Death", "**Kill:** " + operatorModel.kills + "  **Death:** " + operatorModel.deaths + Environment.NewLine +
                                                 "**Ratio: " + StringVisualiser.GetRatio(operatorModel.kills, operatorModel.deaths) + "**");
             
-            TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)operatorModel.timePlayed);
+            TimeSpan operatorTimePlayed = TimeSpan.FromSeconds((double)(operatorModel.timePlayed ?? 0));
             builder.AddField("Time Played", StringVisualiser.ToReadablePlaytime(operatorTimePlayed));
 
             builder.Description = $"**{operatorModel.name}** Operator information for player **{model?.name}** in **{region}** on **{platform}**";
