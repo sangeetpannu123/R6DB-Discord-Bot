@@ -47,6 +47,12 @@ namespace R6DB_Bot.Modules
         [Summary("Get information about ESL matches")]
         public async Task GetESLMatchAsync([Remainder]string text)
         {
+            if (DateTime.Today > new DateTime(2018, 05, 5))
+            {
+                await ReplyAsync("Thanks to GDPR R6DB will be closed, forever. https://medium.com/@r6db/r6db-is-shutting-down-db1b59b031ac");
+                return;
+            }
+
             if (!text.Contains("play.eslgaming"))
             {
                 await ReplyAsync("Please provide a valid ESL match URL");
@@ -74,6 +80,12 @@ namespace R6DB_Bot.Modules
 
         private async Task SendMatchMessage(ESLMatchModel model)
         {
+            if (DateTime.Today > new DateTime(2018, 05, 5))
+            {
+                await ReplyAsync("Thanks to GDPR R6DB will be closed, forever. https://medium.com/@r6db/r6db-is-shutting-down-db1b59b031ac");
+                return;
+            }
+
             var builder = new EmbedBuilder();
 
             builder.AddField("Match Information", $"Found a match; **" + model.MatchName + "**");
@@ -177,7 +189,13 @@ namespace R6DB_Bot.Modules
         [Summary("Get information about ESL Team")]
         public async Task GetESLTeamAsync([Remainder]string text)
         {
-            if(!text.Contains("play.eslgaming"))
+            if (DateTime.Today > new DateTime(2018, 05, 5))
+            {
+                await ReplyAsync("Thanks to GDPR R6DB will be closed, forever. https://medium.com/@r6db/r6db-is-shutting-down-db1b59b031ac");
+                return;
+            }
+
+            if (!text.Contains("play.eslgaming"))
             {
                 await ReplyAsync("Please provide a valid ESL team URL");
                 return;
@@ -202,6 +220,12 @@ namespace R6DB_Bot.Modules
 
         private async Task SendTeamMessage(ESLTeamModel model)
         {
+            if (DateTime.Today > new DateTime(2018, 05, 5))
+            {
+                await ReplyAsync("Thanks to GDPR R6DB will be closed, forever. https://medium.com/@r6db/r6db-is-shutting-down-db1b59b031ac");
+                return;
+            }
+
             if (string.IsNullOrEmpty(model.TeamID))
             {
                 GetESLTeamPlayersByURL(model);
@@ -265,6 +289,12 @@ namespace R6DB_Bot.Modules
 
         private async Task SendPlayerMessage(ESLPlayerModel ESLModel)
         {
+            if (DateTime.Today > new DateTime(2018, 05, 5))
+            {
+                await ReplyAsync("Thanks to GDPR R6DB will be closed, forever. https://medium.com/@r6db/r6db-is-shutting-down-db1b59b031ac");
+                return;
+            }
+
             if (string.IsNullOrEmpty(ESLModel.PlayerName))
             {
                 if(ESLModel.PlayerURL == null)

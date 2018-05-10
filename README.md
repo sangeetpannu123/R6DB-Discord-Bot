@@ -1,3 +1,6 @@
+# TERMINATED
+R6DBot will be terminated from 25th May 2018 due to the new GDPR law. https://medium.com/@r6db/r6db-is-shutting-down-db1b59b031ac
+
 # R6DB-Discord-Bot
 An Unofficial R6DB Discord Bot, developed in DotNetCore 2.0 as a Console Application.
 

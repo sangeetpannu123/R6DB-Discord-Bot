@@ -163,6 +163,12 @@ namespace R6DB_Bot.Modules
         {
             try
             {
+                if (DateTime.Today > new DateTime(2018, 05, 5))
+                {
+                    await ReplyAsync("Thanks to GDPR R6DB will be closed, forever. https://medium.com/@r6db/r6db-is-shutting-down-db1b59b031ac");
+                    return;
+                }
+
                 var model = await PlayerService.GetPlayerInfoFromR6DB(text, baseUrl, xAppId);
                 if(model == null)
                 {

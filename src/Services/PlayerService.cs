@@ -27,6 +27,7 @@ namespace R6DB_Bot.Services
 
         public static async Task<PlayerModel> GetPlayerInfoFromR6DB(string text, string baseUrl, string xAppId)
         {
+
             var requestUri = $"{baseUrl}/Players";
 
             var region = regionEnum.GetAttribute<RegionInformation>().Description;
