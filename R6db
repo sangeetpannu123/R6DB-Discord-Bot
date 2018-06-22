@@ -1,0 +1,9 @@
+{
+  "prefix": "r6db ",
+  "client-id": "[Your client-id]",
+  "x-app-id": "[Your R6DB App-id]",
+  "r6db_url": "https://r6db.com/api/v2",
+  "tokens": {
+    "discord": "[Your discord secret]"
+  }
+}
